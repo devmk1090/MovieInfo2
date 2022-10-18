@@ -1,4 +1,4 @@
-package com.devkproject.movieinfo2
+package com.devkproject.movieinfo2.ui
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle

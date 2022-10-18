@@ -1,4 +1,4 @@
-package com.devkproject.movieinfo2
+package com.devkproject.movieinfo2.ui
 
 import android.os.Bundle
 import androidx.activity.compose.setContent

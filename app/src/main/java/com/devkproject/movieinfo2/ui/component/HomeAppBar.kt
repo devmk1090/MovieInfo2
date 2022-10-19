@@ -1,8 +1,8 @@
 package com.devkproject.movieinfo2.ui.component
 
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Text
-import androidx.compose.material.TopAppBar
+import androidx.compose.material.*
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Menu
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
 import com.devkproject.movieinfo2.ui.theme.Purple500
@@ -13,17 +13,21 @@ fun HomeAppBar(title: String, openDrawer: () -> Unit, openFilters: () -> Unit) {
         backgroundColor = Purple500,
         title = {
             Text(text = title,
-            style = MaterialTheme.typography.h6
+                style = MaterialTheme.typography.h6
             )
         },
         navigationIcon = {
-
+            IconButton(onClick = {
+                openDrawer()
+            }) {
+                Icon(Icons.Default.Menu, contentDescription = "Menu")
+            }
         },
     )
 }
 
 @Preview
 @Composable
-fun Test() {
-    HomeAppBar(title = "MovieInfo", openDrawer = { /*TODO*/ }, openFilters = { })
+fun HomeAppBarTest() {
+    HomeAppBar(title = "MovieInfo", openDrawer = { }, openFilters = { })
 }

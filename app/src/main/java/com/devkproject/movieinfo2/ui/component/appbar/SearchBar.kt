@@ -1,4 +1,4 @@
-package com.devkproject.movieinfo2.ui.component
+package com.devkproject.movieinfo2.ui.component.appbar
 
 import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.clickable

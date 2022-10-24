@@ -4,4 +4,8 @@
     <style name="Theme.MovieInfo2" parent="Theme.MaterialComponents.Light.NoActionBar">
         <item name="android:statusBarColor">@color/purple_700</item>
     </style>
+    <style name="Theme.MovieInfo2.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
 </resources>

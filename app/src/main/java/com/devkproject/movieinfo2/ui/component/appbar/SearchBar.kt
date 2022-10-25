@@ -19,7 +19,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.devkproject.movieinfo2.ui.MainViewModel
+import com.devkproject.movieinfo2.ui.screens.MainViewModel
 import com.devkproject.movieinfo2.ui.theme.blue
 
 @Composable

@@ -1,4 +1,4 @@
-package com.devkproject.movieinfo2.data.artist
+package com.devkproject.movieinfo2.data.model.artist
 
 import com.google.gson.annotations.SerializedName
 

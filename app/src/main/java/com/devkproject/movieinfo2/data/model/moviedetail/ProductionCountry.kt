@@ -1,4 +1,4 @@
-package com.devkproject.movieinfo2.data.moviedetail
+package com.devkproject.movieinfo2.data.model.moviedetail
 
 data class ProductionCountry(
     val iso_3166_1: String,

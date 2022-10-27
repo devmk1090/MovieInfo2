@@ -1,4 +1,4 @@
-package com.devkproject.movieinfo2.data.moviedetail
+package com.devkproject.movieinfo2.data.model.moviedetail
 
 data class BelongsToCollection(
     val backdrop_path: String,

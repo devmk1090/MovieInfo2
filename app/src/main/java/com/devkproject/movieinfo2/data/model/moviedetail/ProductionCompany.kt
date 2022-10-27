@@ -1,4 +1,4 @@
-package com.devkproject.movieinfo2.data.moviedetail
+package com.devkproject.movieinfo2.data.model.moviedetail
 
 data class ProductionCompany(
     val id: Int,

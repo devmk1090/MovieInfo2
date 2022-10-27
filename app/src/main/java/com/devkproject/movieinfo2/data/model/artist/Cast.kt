@@ -1,20 +1,18 @@
-package com.devkproject.movieinfo2.data.artist
+package com.devkproject.movieinfo2.data.model.artist
 
 import com.google.gson.annotations.SerializedName
 
-data class Crew(
+data class Cast(
     @SerializedName("id")
     val id: Int,
-    @SerializedName("credit_id")
-    val creditId: String,
+    @SerializedName("cast_id")
+    val castId: Int,
+    @SerializedName("character")
+    val character: String,
     @SerializedName("name")
     val name: String,
-    @SerializedName("department")
-    val department: String,
     @SerializedName("gender")
     val gender: Int,
-    @SerializedName("job")
-    val job: String,
     @SerializedName("popularity")
     val popularity: Double,
     @SerializedName("profile_path")

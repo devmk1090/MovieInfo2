@@ -8,6 +8,8 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.navigation.NavController
+import com.devkproject.movieinfo2.ui.component.NavigationItem
 import com.devkproject.movieinfo2.ui.component.appbar.HomeAppBar
 import com.devkproject.movieinfo2.ui.theme.floatingActionBackground
 import kotlinx.coroutines.launch
@@ -58,6 +60,21 @@ fun MainScreen() {
                 .padding(it)
                 .fillMaxWidth()
         ) {
+
+        }
+    }
+}
+
+@Composable
+fun BottomNavigationUI(navController: NavController) {
+    BottomNavigation {
+        val items = listOf(
+            NavigationItem.Home,
+            NavigationItem.Popular,
+            NavigationItem.TopRated,
+            NavigationItem.Upcoming,
+        )
+        items.forEach { item ->
 
         }
     }

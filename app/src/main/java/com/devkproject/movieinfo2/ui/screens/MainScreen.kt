@@ -9,6 +9,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
+import com.devkproject.movieinfo2.navigation.NavigationScreen
+import com.devkproject.movieinfo2.navigation.currentRoute
 import com.devkproject.movieinfo2.ui.component.NavigationItem
 import com.devkproject.movieinfo2.ui.component.appbar.HomeAppBar
 import com.devkproject.movieinfo2.ui.theme.floatingActionBackground
@@ -17,6 +20,7 @@ import kotlinx.coroutines.launch
 @Composable
 fun MainScreen() {
 
+    val navController = rememberNavController()
     val coroutineScope = rememberCoroutineScope()
     val isAppBarVisible = remember { mutableStateOf(true) }
     val scaffoldState = rememberScaffoldState()
@@ -54,6 +58,13 @@ fun MainScreen() {
 
             }
         },
+        bottomBar = {
+            when (currentRoute(navController)) {
+                NavigationScreen.HOME, NavigationScreen.POPULAR, NavigationScreen.TOP_RATED, NavigationScreen.UP_COMING -> {
+                    BottomNavigationUI(navController)
+                }
+            }
+        }
     ) {
         Box(
             modifier = Modifier

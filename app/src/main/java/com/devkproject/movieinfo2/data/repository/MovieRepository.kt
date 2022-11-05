@@ -3,10 +3,7 @@ package com.devkproject.movieinfo2.data.repository
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import com.devkproject.movieinfo2.data.remote.ApiService
-import com.devkproject.movieinfo2.data.remote.paging.NowPlayingPagingDataSource
-import com.devkproject.movieinfo2.data.remote.paging.PopularPagingDataSource
-import com.devkproject.movieinfo2.data.remote.paging.TopRatedPagingDataSource
-import com.devkproject.movieinfo2.data.remote.paging.UpcomingPagingDataSource
+import com.devkproject.movieinfo2.data.remote.paging.*
 import com.devkproject.movieinfo2.utils.network.handleApiResponse
 import javax.inject.Inject
 
@@ -33,6 +30,11 @@ class MovieRepository @Inject constructor(private val apiService: ApiService) {
 
     fun upcomingPagingDataSource() = Pager(
         pagingSourceFactory = { UpcomingPagingDataSource(apiService) },
+        config = PagingConfig(pageSize = 1)
+    ).flow
+
+    fun genrePagingDataSource(genreId: String) = Pager(
+        pagingSourceFactory = { GenrePagingDataSource(apiService, genreId) },
         config = PagingConfig(pageSize = 1)
     ).flow
 }

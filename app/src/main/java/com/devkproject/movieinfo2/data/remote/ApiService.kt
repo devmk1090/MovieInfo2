@@ -21,4 +21,10 @@ interface ApiService {
 
     @GET(ApiUrl.MOVIE_DETAIL)
     suspend fun getMovieDetail(@Path("movieId") movieId: Int): MovieItem
+
+    @GET(ApiUrl.GENRE_MOVIES_BY_ID)
+    suspend fun moviesGenre(
+        @Query("page") page: Int,
+        @Query("with_genres") genreId: String
+    ): PageModel
 }

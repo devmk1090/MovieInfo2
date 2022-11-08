@@ -12,6 +12,8 @@ object ApiUrl {
 
     const val MOVIE_DETAIL ="movie/{movieId}?api_key=$API_KEY&language=en-US"
 
+    const val GENRE_MOVIES_BY_ID ="discover/movie?api_key=$API_KEY&language=en-US"
+
     //Youtube
     const val YOUTUBE_BASE_URL = "https://www.youtube.com/watch?v="
     const val YOUTUBE_THUMBNAIL_BASE_URL = "https://img.youtube.com/vi/"

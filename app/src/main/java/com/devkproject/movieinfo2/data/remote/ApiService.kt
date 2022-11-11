@@ -2,6 +2,7 @@ package com.devkproject.movieinfo2.data.remote
 
 import com.devkproject.movieinfo2.data.model.MovieItem
 import com.devkproject.movieinfo2.data.model.PageModel
+import com.devkproject.movieinfo2.data.model.moviedetail.MovieDetail
 import retrofit2.http.GET
 import retrofit2.http.Path
 import retrofit2.http.Query
@@ -20,7 +21,7 @@ interface ApiService {
     suspend fun getUpcomingMovieList(@Query("page") page: Int): PageModel
 
     @GET(ApiUrl.MOVIE_DETAIL)
-    suspend fun getMovieDetail(@Path("movieId") movieId: Int): MovieItem
+    suspend fun getMovieDetail(@Path("movieId") movieId: Int): MovieDetail
 
     @GET(ApiUrl.GENRE_MOVIES_BY_ID)
     suspend fun moviesGenre(

@@ -7,44 +7,67 @@ import androidx.compose.material.icons.filled.Search
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
+import com.devkproject.movieinfo2.R
 import com.devkproject.movieinfo2.navigation.Navigation
 import com.devkproject.movieinfo2.navigation.NavigationScreen
 import com.devkproject.movieinfo2.navigation.currentRoute
 import com.devkproject.movieinfo2.ui.component.CircularProgressBar
 import com.devkproject.movieinfo2.ui.component.NavigationItem
+import com.devkproject.movieinfo2.ui.component.appbar.AppBarWithArrow
 import com.devkproject.movieinfo2.ui.component.appbar.HomeAppBar
+import com.devkproject.movieinfo2.ui.component.appbar.SearchBar
 import com.devkproject.movieinfo2.ui.theme.floatingActionBackground
 import kotlinx.coroutines.launch
 
 @Composable
 fun MainScreen() {
 
+    val mainViewModel = hiltViewModel<MainViewModel>()
     val navController = rememberNavController()
     val coroutineScope = rememberCoroutineScope()
     val isAppBarVisible = remember { mutableStateOf(true) }
     val scaffoldState = rememberScaffoldState()
     val searchProgressBar = remember { mutableStateOf(false) }
+    val genreName = remember { mutableStateOf("") }
 
     Scaffold(
         scaffoldState = scaffoldState,
         topBar = {
-            HomeAppBar(
-                title = "test",
-                openDrawer = {
-                    coroutineScope.launch {
-                        scaffoldState.drawerState.apply {
-                            if (isClosed) open() else close()
-                        }
+            when (currentRoute(navController)) {
+                NavigationScreen.HOME, NavigationScreen.POPULAR, NavigationScreen.TOP_RATED, NavigationScreen.UP_COMING, NavigationScreen.NAVIGATION_DRAWER -> {
+                    if (isAppBarVisible.value) {
+                        val appTitle: String =
+                            if (currentRoute(navController) == NavigationScreen.NAVIGATION_DRAWER)
+                                genreName.value
+                            else
+                                stringResource(R.string.app_name)
+                        HomeAppBar(
+                            title = appTitle,
+                            openDrawer = {
+                                coroutineScope.launch {
+                                    scaffoldState.drawerState.apply {
+                                        if (isClosed) open() else close()
+                                    }
+                                }
+                            },
+                            openFilters = {
+                                isAppBarVisible.value = false
+
+                            }
+                        )
+                    } else {
+                        SearchBar(isAppBarVisible, mainViewModel)
                     }
-                },
-                openFilters = {
-                    isAppBarVisible.value = false
+                }
+                else -> {
 
                 }
-            )
+            }
         },
         floatingActionButton = {
             when (currentRoute(navController)) {

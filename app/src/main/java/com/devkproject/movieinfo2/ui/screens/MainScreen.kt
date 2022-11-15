@@ -21,6 +21,7 @@ import com.devkproject.movieinfo2.ui.component.NavigationItem
 import com.devkproject.movieinfo2.ui.component.appbar.AppBarWithArrow
 import com.devkproject.movieinfo2.ui.component.appbar.HomeAppBar
 import com.devkproject.movieinfo2.ui.component.appbar.SearchBar
+import com.devkproject.movieinfo2.ui.screens.drawer.DrawerUI
 import com.devkproject.movieinfo2.ui.theme.floatingActionBackground
 import kotlinx.coroutines.launch
 
@@ -32,6 +33,7 @@ fun MainScreen() {
     val coroutineScope = rememberCoroutineScope()
     val isAppBarVisible = remember { mutableStateOf(true) }
     val scaffoldState = rememberScaffoldState()
+    val scope = rememberCoroutineScope()
     val searchProgressBar = remember { mutableStateOf(false) }
     val genreName = remember { mutableStateOf("") }
 
@@ -66,6 +68,13 @@ fun MainScreen() {
                 }
                 else -> {
 
+                }
+            }
+        },
+        drawerContent = {
+            DrawerUI(navController, emptyList()) {
+                scope.launch {
+                    scaffoldState.drawerState.close()
                 }
             }
         },

@@ -12,6 +12,7 @@ object ApiUrl {
 
     const val MOVIE_DETAIL ="movie/{movieId}?api_key=$API_KEY&language=en-US"
 
+    const val GENRE_LIST ="genre/movie/list?api_key=$API_KEY&language=en-US"
     const val GENRE_MOVIES_BY_ID ="discover/movie?api_key=$API_KEY&language=en-US"
 
     //Youtube

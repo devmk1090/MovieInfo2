@@ -2,6 +2,7 @@ package com.devkproject.movieinfo2.data.repository
 
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
+import com.devkproject.movieinfo2.data.model.Genres
 import com.devkproject.movieinfo2.data.model.PageModel
 import com.devkproject.movieinfo2.data.model.moviedetail.MovieDetail
 import com.devkproject.movieinfo2.data.remote.ApiService
@@ -30,6 +31,16 @@ class MovieRepository @Inject constructor(private val apiService: ApiService) {
             val searchResult = apiService.getMovieDetail(movieId)
             emit(DataState.Success(searchResult))
 
+        } catch (e: Exception) {
+            emit(DataState.Error(e))
+        }
+    }
+
+    suspend fun getGenreList(): Flow<DataState<Genres>> = flow {
+        emit(DataState.Loading)
+        try {
+            val genreResult = apiService.genreList()
+            emit(DataState.Success(genreResult))
         } catch (e: Exception) {
             emit(DataState.Error(e))
         }

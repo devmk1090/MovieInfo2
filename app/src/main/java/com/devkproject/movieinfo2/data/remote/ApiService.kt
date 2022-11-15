@@ -1,5 +1,6 @@
 package com.devkproject.movieinfo2.data.remote
 
+import com.devkproject.movieinfo2.data.model.Genres
 import com.devkproject.movieinfo2.data.model.MovieItem
 import com.devkproject.movieinfo2.data.model.PageModel
 import com.devkproject.movieinfo2.data.model.moviedetail.MovieDetail
@@ -22,6 +23,9 @@ interface ApiService {
 
     @GET(ApiUrl.MOVIE_DETAIL)
     suspend fun getMovieDetail(@Path("movieId") movieId: Int): MovieDetail
+
+    @GET(ApiUrl.GENRE_LIST)
+    suspend fun genreList(): Genres
 
     @GET(ApiUrl.GENRE_MOVIES_BY_ID)
     suspend fun moviesGenre(

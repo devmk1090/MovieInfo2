@@ -79,7 +79,7 @@ fun MovieItemView(context: Context, item: MovieItem, navController: NavControlle
         Image(
             painter = rememberImagePainter(ApiUrl.POSTER_URL.plus(item.posterPath)),
             contentDescription = null,
-            contentScale = ContentScale.Crop,
+            contentScale = ContentScale.FillWidth,
             modifier = Modifier
                 .size(250.dp)
                 .cornerRadius10()
@@ -91,7 +91,7 @@ fun MovieItemView(context: Context, item: MovieItem, navController: NavControlle
         )
         Text(
             text = item.title,
-            color = Color.Blue
+            color = Color.Blue,
         )
     }
 }

@@ -13,6 +13,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.devkproject.movieinfo2.R
+import com.devkproject.movieinfo2.data.model.Genres
 import com.devkproject.movieinfo2.navigation.Navigation
 import com.devkproject.movieinfo2.navigation.NavigationScreen
 import com.devkproject.movieinfo2.navigation.currentRoute
@@ -23,6 +24,7 @@ import com.devkproject.movieinfo2.ui.component.appbar.HomeAppBar
 import com.devkproject.movieinfo2.ui.component.appbar.SearchBar
 import com.devkproject.movieinfo2.ui.screens.drawer.DrawerUI
 import com.devkproject.movieinfo2.ui.theme.floatingActionBackground
+import com.devkproject.movieinfo2.utils.network.DataState
 import kotlinx.coroutines.launch
 
 @Composable
@@ -35,7 +37,13 @@ fun MainScreen() {
     val scaffoldState = rememberScaffoldState()
     val scope = rememberCoroutineScope()
     val searchProgressBar = remember { mutableStateOf(false) }
+    val genres = mainViewModel.genres.value
     val genreName = remember { mutableStateOf("") }
+
+    //genre list api call for first time
+    LaunchedEffect(true) {
+        mainViewModel.genreList()
+    }
 
     Scaffold(
         scaffoldState = scaffoldState,
@@ -72,9 +80,12 @@ fun MainScreen() {
             }
         },
         drawerContent = {
-            DrawerUI(navController, emptyList()) {
-                scope.launch {
-                    scaffoldState.drawerState.close()
+            if (genres is DataState.Success<Genres>) {
+                DrawerUI(navController, genres.data.genres) {
+                    genreName.value = it
+                    scope.launch {
+                        scaffoldState.drawerState.close()
+                    }
                 }
             }
         },

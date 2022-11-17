@@ -84,6 +84,7 @@ fun MovieItemView(context: Context, item: MovieItem, navController: NavControlle
                 .size(250.dp)
                 .cornerRadius10()
                 .clickable {
+                    navController.navigate(NavigationScreen.MovieDetail.MOVIE_DETAIL.plus("/${item.id}"))
                     Toast
                         .makeText(context, item.originalTitle, Toast.LENGTH_SHORT)
                         .show()
@@ -93,5 +94,7 @@ fun MovieItemView(context: Context, item: MovieItem, navController: NavControlle
             text = item.title,
             color = Color.Blue,
         )
+        Text(text = item.releaseDate)
+        Text(text = item.voteAverage.toString())
     }
 }

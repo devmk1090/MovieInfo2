@@ -26,7 +26,7 @@ sealed class NavigationItem(
                 .padding(end = 16.dp)
                 .offset(x = 10.dp)
         )
-    }, "Home")
+    }, "Now Playing")
 
     object Popular : NavigationItem(NavigationScreen.POPULAR, {
         Icon(

@@ -6,4 +6,7 @@
     <string name="text_close_yes">예</string>
     <string name="text_close_no">아니오</string>
     <string name="no_internet">인터넷 연결을 확인해주세요!</string>
+
+    <string name="movie_detail">Movie detail</string>
+
 </resources>

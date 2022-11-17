@@ -36,7 +36,6 @@ fun DrawerUI(
                     navController.navigate(NavigationScreen.NAVIGATION_DRAWER.plus("/${it.id}")) {
                         launchSingleTop = true
                     }
-                    //Close
                     closeDrawer(it.name)
                 })
         })

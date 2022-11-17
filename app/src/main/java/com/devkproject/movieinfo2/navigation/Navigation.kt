@@ -3,11 +3,15 @@ package com.devkproject.movieinfo2.navigation
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.navigation.NavController
 import androidx.navigation.NavHostController
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
+import androidx.navigation.navArgument
+import com.devkproject.movieinfo2.R
 import com.devkproject.movieinfo2.ui.screens.bottomnavigation.nowplaying.NowPlaying
 import com.devkproject.movieinfo2.ui.screens.bottomnavigation.popular.Popular
 import com.devkproject.movieinfo2.ui.screens.bottomnavigation.toprated.TopRated
@@ -38,6 +42,19 @@ fun Navigation(
             Upcoming(
                 navController = navController
             )
+        }
+        composable(
+            NavigationScreen.MovieDetail.MOVIE_DETAIL.plus(NavigationScreen.MovieDetail.MOVIE_DETAIL_PATH),
+            arguments = listOf(navArgument(NavigationScreen.MovieDetail.MOVIE_ITEM) {
+                type = NavType.IntType
+            })
+        ) {
+            label = stringResource(R.string.movie_detail)
+            val movieId =
+                it.arguments?.getInt(NavigationScreen.MovieDetail.MOVIE_ITEM)
+            if (movieId != null) {
+                //TODO Detail screen
+            }
         }
     }
 }

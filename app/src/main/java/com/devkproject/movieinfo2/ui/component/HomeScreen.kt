@@ -85,9 +85,6 @@ fun MovieItemView(context: Context, item: MovieItem, navController: NavControlle
                 .cornerRadius10()
                 .clickable {
                     navController.navigate(NavigationScreen.MovieDetail.MOVIE_DETAIL.plus("/${item.id}"))
-                    Toast
-                        .makeText(context, item.originalTitle, Toast.LENGTH_SHORT)
-                        .show()
                 }
         )
         Text(

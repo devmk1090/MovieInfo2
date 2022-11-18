@@ -16,6 +16,7 @@ import com.devkproject.movieinfo2.ui.screens.bottomnavigation.nowplaying.NowPlay
 import com.devkproject.movieinfo2.ui.screens.bottomnavigation.popular.Popular
 import com.devkproject.movieinfo2.ui.screens.bottomnavigation.toprated.TopRated
 import com.devkproject.movieinfo2.ui.screens.bottomnavigation.upcoming.Upcoming
+import com.devkproject.movieinfo2.ui.screens.detail.MovieDetail
 
 @Composable
 fun Navigation(
@@ -53,7 +54,7 @@ fun Navigation(
             val movieId =
                 it.arguments?.getInt(NavigationScreen.MovieDetail.MOVIE_ITEM)
             if (movieId != null) {
-                //TODO Detail screen
+                MovieDetail(navController = navController, movieId = movieId)
             }
         }
     }

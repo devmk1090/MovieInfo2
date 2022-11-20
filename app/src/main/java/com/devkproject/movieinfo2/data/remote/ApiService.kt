@@ -24,6 +24,9 @@ interface ApiService {
     @GET(ApiUrl.MOVIE_DETAIL)
     suspend fun getMovieDetail(@Path("movieId") movieId: Int): MovieDetail
 
+    @GET(ApiUrl.RECOMMENDED_MOVIE)
+    suspend fun recommendedMovie(@Path("movieId") movieId: Int, @Query("page") one: Int): PageModel
+
     @GET(ApiUrl.GENRE_LIST)
     suspend fun genreList(): Genres
 

@@ -35,6 +35,7 @@ import com.devkproject.movieinfo2.ui.theme.textColorPrimary
 import com.devkproject.movieinfo2.ui.theme.textColorSecondary
 import com.devkproject.movieinfo2.utils.hourMinutes
 import com.devkproject.movieinfo2.utils.network.DataState
+import com.devkproject.movieinfo2.utils.pagingLoadingState
 
 @Composable
 fun MovieDetail(navController: NavController, movieId: Int) {
@@ -122,6 +123,9 @@ fun MovieDetail(navController: NavController, movieId: Int) {
                     }
                 }
             }
+        }
+        recommendedMovie.pagingLoadingState {
+            progressBar.value = it
         }
     }
 }

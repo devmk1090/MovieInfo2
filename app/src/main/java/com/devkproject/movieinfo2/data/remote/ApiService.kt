@@ -3,6 +3,7 @@ package com.devkproject.movieinfo2.data.remote
 import com.devkproject.movieinfo2.data.model.Genres
 import com.devkproject.movieinfo2.data.model.MovieItem
 import com.devkproject.movieinfo2.data.model.PageModel
+import com.devkproject.movieinfo2.data.model.artist.CastCrew
 import com.devkproject.movieinfo2.data.model.moviedetail.MovieDetail
 import retrofit2.http.GET
 import retrofit2.http.Path
@@ -25,7 +26,10 @@ interface ApiService {
     suspend fun getMovieDetail(@Path("movieId") movieId: Int): MovieDetail
 
     @GET(ApiUrl.RECOMMENDED_MOVIE)
-    suspend fun recommendedMovie(@Path("movieId") movieId: Int, @Query("page") one: Int): PageModel
+    suspend fun getRecommendedMovie(@Path("movieId") movieId: Int, @Query("page") one: Int): PageModel
+
+    @GET(ApiUrl.MOVIE_CREDIT)
+    suspend fun getMovieCredit(@Path("movieId") movieId: Int): CastCrew
 
     @GET(ApiUrl.GENRE_LIST)
     suspend fun genreList(): Genres

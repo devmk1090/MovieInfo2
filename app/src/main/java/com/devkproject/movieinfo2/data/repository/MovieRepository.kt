@@ -4,6 +4,7 @@ import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import com.devkproject.movieinfo2.data.model.Genres
 import com.devkproject.movieinfo2.data.model.PageModel
+import com.devkproject.movieinfo2.data.model.artist.CastCrew
 import com.devkproject.movieinfo2.data.model.moviedetail.MovieDetail
 import com.devkproject.movieinfo2.data.remote.ApiService
 import com.devkproject.movieinfo2.data.remote.paging.*
@@ -39,8 +40,19 @@ class MovieRepository @Inject constructor(private val apiService: ApiService) {
     suspend fun getRecommendedMovie(movieId: Int, page: Int): Flow<DataState<PageModel>> = flow {
         emit(DataState.Loading)
         try {
-            val searchResult = apiService.recommendedMovie(movieId, page)
+            val searchResult = apiService.getRecommendedMovie(movieId, page)
             emit(DataState.Success(searchResult))
+
+        } catch (e: Exception) {
+            emit(DataState.Error(e))
+        }
+    }
+
+    suspend fun getMovieCredit(movieId: Int): Flow<DataState<CastCrew>> = flow {
+        emit(DataState.Loading)
+        try {
+            val artistResult = apiService.getMovieCredit(movieId)
+            emit(DataState.Success(artistResult))
 
         } catch (e: Exception) {
             emit(DataState.Error(e))

@@ -51,10 +51,21 @@ fun Navigation(
             })
         ) {
             label = stringResource(R.string.movie_detail)
-            val movieId =
-                it.arguments?.getInt(NavigationScreen.MovieDetail.MOVIE_ITEM)
+            val movieId = it.arguments?.getInt(NavigationScreen.MovieDetail.MOVIE_ITEM)
             if (movieId != null) {
                 MovieDetail(navController = navController, movieId = movieId)
+            }
+        }
+        composable(
+            NavigationScreen.ArtistDetail.ARTIST_DETAIL.plus(NavigationScreen.ArtistDetail.ARTIST_DETAIL_PATH),
+            arguments = listOf(navArgument(NavigationScreen.ArtistDetail.ARTIST_ID) {
+                type = NavType.IntType
+            })
+        ) {
+            label = stringResource(R.string.artist_detail)
+            val artistId = it.arguments?.getInt(NavigationScreen.ArtistDetail.ARTIST_ID)
+            if (artistId != null) {
+                //TODO
             }
         }
     }

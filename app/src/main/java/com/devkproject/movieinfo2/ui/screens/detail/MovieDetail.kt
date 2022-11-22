@@ -23,16 +23,15 @@ import coil.compose.rememberImagePainter
 import com.devkproject.movieinfo2.R
 import com.devkproject.movieinfo2.data.model.MovieItem
 import com.devkproject.movieinfo2.data.model.PageModel
+import com.devkproject.movieinfo2.data.model.artist.ArtistCrew
+import com.devkproject.movieinfo2.data.model.artist.Cast
 import com.devkproject.movieinfo2.data.model.moviedetail.MovieDetail
 import com.devkproject.movieinfo2.data.remote.ApiUrl
 import com.devkproject.movieinfo2.navigation.NavigationScreen
 import com.devkproject.movieinfo2.ui.component.CircularProgressBar
 import com.devkproject.movieinfo2.ui.component.text.SubtitlePrimary
 import com.devkproject.movieinfo2.ui.component.text.SubtitleSecondary
-import com.devkproject.movieinfo2.ui.theme.backgroundColor
-import com.devkproject.movieinfo2.ui.theme.cornerRadius10
-import com.devkproject.movieinfo2.ui.theme.textColorPrimary
-import com.devkproject.movieinfo2.ui.theme.textColorSecondary
+import com.devkproject.movieinfo2.ui.theme.*
 import com.devkproject.movieinfo2.utils.hourMinutes
 import com.devkproject.movieinfo2.utils.network.DataState
 import com.devkproject.movieinfo2.utils.pagingLoadingState
@@ -43,10 +42,12 @@ fun MovieDetail(navController: NavController, movieId: Int) {
     val progressBar = remember { mutableStateOf(false) }
     val movieDetail = movieDetailViewModel.movieDetail
     val recommendedMovie = movieDetailViewModel.recommendedMovie
+    val artistCrew = movieDetailViewModel.artistCrew
 
     LaunchedEffect(true) {
         movieDetailViewModel.movieDetail(movieId)
         movieDetailViewModel.recommendedMovie(movieId, 1)
+        movieDetailViewModel.movieCredit(movieId)
     }
 
     Column(
@@ -127,6 +128,9 @@ fun MovieDetail(navController: NavController, movieId: Int) {
         recommendedMovie.pagingLoadingState {
             progressBar.value = it
         }
+        movieDetail.pagingLoadingState {
+            progressBar.value = it
+        }
     }
 }
 
@@ -165,6 +169,51 @@ fun RecommendedMovie(navController: NavController?, recommendedMovie: List<Movie
                                 )
                             }
                     )
+                }
+            })
+        }
+    }
+}
+
+@Composable
+fun ArtistAndCrew(navController: NavController?, cast: List<Cast>) {
+    Column(modifier = Modifier.padding(bottom = 10.dp)) {
+        Text(
+            text = stringResource(R.string.cast),
+            color = textColorPrimary,
+            fontSize = 16.sp,
+            fontWeight = FontWeight.SemiBold
+        )
+        LazyRow(modifier = Modifier.fillMaxHeight()) {
+            items(cast, itemContent = { item ->
+                Column(
+                    modifier = Modifier.padding(
+                        start = 0.dp,
+                        end = 8.dp,
+                        top = 5.dp,
+                        bottom = 5.dp
+                    ),
+
+                ) {
+                    Image(
+                        painter = rememberImagePainter(ApiUrl.POSTER_URL.plus(item.profilePath)),
+                        contentDescription = null,
+                        contentScale = ContentScale.FillBounds,
+                        modifier = Modifier
+                            .padding(bottom = 5.dp)
+                            .height(80.dp)
+                            .width(80.dp)
+                            .cornerRadius40()
+                            .clickable {
+                                navController?.navigate(
+                                    NavigationScreen.ArtistDetail.ARTIST_DETAIL.plus(
+                                        "/${item.id}"
+                                    )
+                                )
+                            }
+
+                    )
+                    SubtitleSecondary(text = item.name)
                 }
             })
         }

@@ -4,12 +4,12 @@ import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import com.devkproject.movieinfo2.data.model.Genres
 import com.devkproject.movieinfo2.data.model.PageModel
-import com.devkproject.movieinfo2.data.model.artist.CastCrew
+import com.devkproject.movieinfo2.data.model.artist.ArtistCrew
+import com.devkproject.movieinfo2.data.model.artist.ArtistDetail
 import com.devkproject.movieinfo2.data.model.moviedetail.MovieDetail
 import com.devkproject.movieinfo2.data.remote.ApiService
 import com.devkproject.movieinfo2.data.remote.paging.*
 import com.devkproject.movieinfo2.utils.network.DataState
-import com.devkproject.movieinfo2.utils.network.handleApiResponse
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import javax.inject.Inject
@@ -37,6 +37,16 @@ class MovieRepository @Inject constructor(private val apiService: ApiService) {
         }
     }
 
+    suspend fun getGenreList(): Flow<DataState<Genres>> = flow {
+        emit(DataState.Loading)
+        try {
+            val genreResult = apiService.genreList()
+            emit(DataState.Success(genreResult))
+        } catch (e: Exception) {
+            emit(DataState.Error(e))
+        }
+    }
+
     suspend fun getRecommendedMovie(movieId: Int, page: Int): Flow<DataState<PageModel>> = flow {
         emit(DataState.Loading)
         try {
@@ -48,7 +58,7 @@ class MovieRepository @Inject constructor(private val apiService: ApiService) {
         }
     }
 
-    suspend fun getMovieCredit(movieId: Int): Flow<DataState<CastCrew>> = flow {
+    suspend fun getMovieCredit(movieId: Int): Flow<DataState<ArtistCrew>> = flow {
         emit(DataState.Loading)
         try {
             val artistResult = apiService.getMovieCredit(movieId)
@@ -59,11 +69,11 @@ class MovieRepository @Inject constructor(private val apiService: ApiService) {
         }
     }
 
-    suspend fun getGenreList(): Flow<DataState<Genres>> = flow {
+    suspend fun getArtistDetail(personId: Int): Flow<DataState<ArtistDetail>> = flow {
         emit(DataState.Loading)
         try {
-            val genreResult = apiService.genreList()
-            emit(DataState.Success(genreResult))
+            val artistDetailResult = apiService.getArtistDetail(personId)
+            emit(DataState.Success(artistDetailResult))
         } catch (e: Exception) {
             emit(DataState.Error(e))
         }

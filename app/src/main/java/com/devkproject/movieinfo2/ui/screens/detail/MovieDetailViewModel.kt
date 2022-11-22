@@ -5,7 +5,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.devkproject.movieinfo2.data.model.PageModel
-import com.devkproject.movieinfo2.data.model.artist.CastCrew
+import com.devkproject.movieinfo2.data.model.artist.ArtistCrew
 import com.devkproject.movieinfo2.data.model.moviedetail.MovieDetail
 import com.devkproject.movieinfo2.data.repository.MovieRepository
 import com.devkproject.movieinfo2.utils.network.DataState
@@ -19,7 +19,7 @@ import javax.inject.Inject
 class MovieDetailViewModel @Inject constructor(private val movieRepository: MovieRepository): ViewModel() {
     val movieDetail: MutableState<DataState<MovieDetail>?> = mutableStateOf(null)
     val recommendedMovie: MutableState<DataState<PageModel>?> = mutableStateOf(null)
-    val castCrew: MutableState<DataState<CastCrew>?> = mutableStateOf(null)
+    val artistCrew: MutableState<DataState<ArtistCrew>?> = mutableStateOf(null)
 
     fun movieDetail(movieId: Int) {
         viewModelScope.launch {
@@ -40,7 +40,7 @@ class MovieDetailViewModel @Inject constructor(private val movieRepository: Movi
     fun movieCredit(movieInt: Int) {
         viewModelScope.launch {
             movieRepository.getMovieCredit(movieInt).onEach {
-                castCrew.value = it
+                artistCrew.value = it
             }.launchIn(viewModelScope)
         }
     }

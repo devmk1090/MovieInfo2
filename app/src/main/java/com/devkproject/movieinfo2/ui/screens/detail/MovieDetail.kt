@@ -121,6 +121,11 @@ fun MovieDetail(navController: NavController, movieId: Int) {
                                 RecommendedMovie(navController, it.data.results)
                             }
                         }
+                        artistCrew.value?.let {
+                            if (it is DataState.Success<ArtistCrew>) {
+                                ArtistAndCrew(navController, it.data.cast)
+                            }
+                        }
                     }
                 }
             }

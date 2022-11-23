@@ -12,6 +12,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.navArgument
 import com.devkproject.movieinfo2.R
+import com.devkproject.movieinfo2.ui.screens.artistdetail.ArtistDetail
 import com.devkproject.movieinfo2.ui.screens.bottomnavigation.nowplaying.NowPlaying
 import com.devkproject.movieinfo2.ui.screens.bottomnavigation.popular.Popular
 import com.devkproject.movieinfo2.ui.screens.bottomnavigation.toprated.TopRated
@@ -65,7 +66,7 @@ fun Navigation(
             label = stringResource(R.string.artist_detail)
             val artistId = it.arguments?.getInt(NavigationScreen.ArtistDetail.ARTIST_ID)
             if (artistId != null) {
-                //TODO
+                ArtistDetail(artistId)
             }
         }
     }

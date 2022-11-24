@@ -18,6 +18,7 @@ import com.devkproject.movieinfo2.data.model.Genres
 import com.devkproject.movieinfo2.navigation.Navigation
 import com.devkproject.movieinfo2.navigation.NavigationScreen
 import com.devkproject.movieinfo2.navigation.currentRoute
+import com.devkproject.movieinfo2.navigation.navigationTitle
 import com.devkproject.movieinfo2.ui.component.CircularProgressBar
 import com.devkproject.movieinfo2.ui.component.NavigationItem
 import com.devkproject.movieinfo2.ui.component.appbar.AppBarWithArrow
@@ -81,7 +82,9 @@ fun MainScreen() {
                     }
                 }
                 else -> {
-
+                    AppBarWithArrow(navigationTitle(navController)) {
+                        navController.popBackStack()
+                    }
                 }
             }
         },

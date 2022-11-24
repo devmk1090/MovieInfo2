@@ -73,6 +73,17 @@ fun Navigation(
 }
 
 @Composable
+fun navigationTitle(navController: NavController): String {
+    return when (currentRoute(navController)) {
+        NavigationScreen.MovieDetail.MOVIE_DETAIL -> stringResource(id = R.string.movie_detail)
+        NavigationScreen.ArtistDetail.ARTIST_DETAIL -> stringResource(id = R.string.artist_detail)
+        else -> {
+            ""
+        }
+    }
+}
+
+@Composable
 fun currentRoute(navController: NavController): String? {
     val navBackStackEntry by navController.currentBackStackEntryAsState()
     return navBackStackEntry?.destination?.route?.substringBeforeLast("/")

@@ -20,10 +20,12 @@ import com.devkproject.movieinfo2.R
 import com.devkproject.movieinfo2.data.model.artist.ArtistDetail
 import com.devkproject.movieinfo2.data.remote.ApiUrl
 import com.devkproject.movieinfo2.ui.component.CircularProgressBar
+import com.devkproject.movieinfo2.ui.component.text.BioGraphyText
 import com.devkproject.movieinfo2.ui.theme.backgroundColor
 import com.devkproject.movieinfo2.ui.theme.cornerRadius10
 import com.devkproject.movieinfo2.ui.theme.textColorPrimary
 import com.devkproject.movieinfo2.ui.theme.textColorSecondary
+import com.devkproject.movieinfo2.utils.genderInString
 import com.devkproject.movieinfo2.utils.network.DataState
 import com.devkproject.movieinfo2.utils.pagingLoadingState
 
@@ -66,9 +68,20 @@ fun ArtistDetail(personId: Int) {
                             fontSize = 26.sp,
                             fontWeight = FontWeight.Medium
                         )
+                        PersonalInfo(stringResource(R.string.know_for), it.data.knownForDepartment)
+                        PersonalInfo(stringResource(R.string.gender), it.data.gender.genderInString())
+                        PersonalInfo(stringResource(R.string.birth_day), it.data.birthday)
+                        PersonalInfo(stringResource(R.string.place_of_birth), it.data.placeOfBirth)
                     }
-                    PersonalInfo(stringResource(R.string.know_for), it.data.knownForDepartment)
                 }
+                Text(
+                    modifier = Modifier.padding(bottom = 8.dp),
+                    text = stringResource(R.string.biography),
+                    color = textColorSecondary,
+                    fontSize = 22.sp,
+                    fontWeight = FontWeight.Medium
+                )
+                BioGraphyText(text = it.data.biography)
             }
         }
     }

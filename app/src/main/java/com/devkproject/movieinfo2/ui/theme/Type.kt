@@ -48,3 +48,13 @@ val Typography.subTitleSecondary: TextStyle
             fontSize = 10.sp,
         )
     }
+
+val Typography.bioGrapyText: TextStyle
+    @Composable
+    get() {
+        return TextStyle(
+            fontFamily = FontFamily.Default,
+            color = textColorSecondary,
+            fontSize = 14.sp,
+        )
+    }

@@ -6,4 +6,22 @@
     <string name="text_close_yes">예</string>
     <string name="text_close_no">아니오</string>
     <string name="no_internet">인터넷 연결을 확인해주세요!</string>
+
+    <string name="movie_detail">Movie detail</string>
+    <string name="title">Title</string>
+    <string name="description">Description</string>
+    <string name="release_date">Release Date</string>
+    <string name="rating">Rating</string>
+    <string name="language">Language</string>
+    <string name="duration">Duration</string>
+
+    <string name="similar">Similar</string>
+    <string name="artist_detail">Artist detail</string>
+    <string name="cast">Cast</string>
+
+    <string name="know_for">Known for</string>
+    <string name="biography">Biography</string>
+    <string name="gender">Gender</string>
+    <string name="birth_day">Birthday</string>
+    <string name="place_of_birth">Place of Birt</string>
 </resources>

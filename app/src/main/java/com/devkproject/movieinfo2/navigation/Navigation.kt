@@ -3,15 +3,21 @@ package com.devkproject.movieinfo2.navigation
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.navigation.NavController
 import androidx.navigation.NavHostController
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
+import androidx.navigation.navArgument
+import com.devkproject.movieinfo2.R
+import com.devkproject.movieinfo2.ui.screens.artistdetail.ArtistDetail
 import com.devkproject.movieinfo2.ui.screens.bottomnavigation.nowplaying.NowPlaying
 import com.devkproject.movieinfo2.ui.screens.bottomnavigation.popular.Popular
 import com.devkproject.movieinfo2.ui.screens.bottomnavigation.toprated.TopRated
 import com.devkproject.movieinfo2.ui.screens.bottomnavigation.upcoming.Upcoming
+import com.devkproject.movieinfo2.ui.screens.detail.MovieDetail
 
 @Composable
 fun Navigation(
@@ -38,6 +44,41 @@ fun Navigation(
             Upcoming(
                 navController = navController
             )
+        }
+        composable(
+            NavigationScreen.MovieDetail.MOVIE_DETAIL.plus(NavigationScreen.MovieDetail.MOVIE_DETAIL_PATH),
+            arguments = listOf(navArgument(NavigationScreen.MovieDetail.MOVIE_ITEM) {
+                type = NavType.IntType
+            })
+        ) {
+            label = stringResource(R.string.movie_detail)
+            val movieId = it.arguments?.getInt(NavigationScreen.MovieDetail.MOVIE_ITEM)
+            if (movieId != null) {
+                MovieDetail(navController = navController, movieId = movieId)
+            }
+        }
+        composable(
+            NavigationScreen.ArtistDetail.ARTIST_DETAIL.plus(NavigationScreen.ArtistDetail.ARTIST_DETAIL_PATH),
+            arguments = listOf(navArgument(NavigationScreen.ArtistDetail.ARTIST_ID) {
+                type = NavType.IntType
+            })
+        ) {
+            label = stringResource(R.string.artist_detail)
+            val artistId = it.arguments?.getInt(NavigationScreen.ArtistDetail.ARTIST_ID)
+            if (artistId != null) {
+                ArtistDetail(artistId)
+            }
+        }
+    }
+}
+
+@Composable
+fun navigationTitle(navController: NavController): String {
+    return when (currentRoute(navController)) {
+        NavigationScreen.MovieDetail.MOVIE_DETAIL -> stringResource(id = R.string.movie_detail)
+        NavigationScreen.ArtistDetail.ARTIST_DETAIL -> stringResource(id = R.string.artist_detail)
+        else -> {
+            ""
         }
     }
 }

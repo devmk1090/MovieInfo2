@@ -2,7 +2,7 @@ package com.devkproject.movieinfo2.data.model.artist
 
 import com.google.gson.annotations.SerializedName
 
-data class CastCrew(
+data class ArtistCrew(
     @SerializedName("id")
     val id: Int,
     @SerializedName("cast")

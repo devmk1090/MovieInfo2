@@ -4,6 +4,7 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Search
+import androidx.compose.material.icons.filled.Star
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -103,11 +104,11 @@ fun MainScreen() {
                 NavigationScreen.HOME, NavigationScreen.POPULAR, NavigationScreen.TOP_RATED, NavigationScreen.UP_COMING -> {
                     FloatingActionButton(
                         onClick = {
-                            isAppBarVisible.value = false
+                            //TODO 찜 목록 or 설정 페이지
                         },
                         backgroundColor = floatingActionBackground
                     ) {
-                        Icon(Icons.Filled.Search, "", tint = Color.White)
+                        Icon(Icons.Filled.Star, "", tint = Color.White)
                     }
                 }
             }

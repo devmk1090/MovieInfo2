@@ -57,7 +57,6 @@ fun MovieDetail(navController: NavController, movieId: Int) {
     ) {
         CircularProgressBar(isDisplayed = progressBar.value, verticalBias = 0.4f)
         movieDetail.value?.let { it ->
-            Log.d("501501", it.toString())
             if (it is DataState.Success<MovieDetail>) {
                 Column(modifier = Modifier.verticalScroll(rememberScrollState())) {
                     Image(

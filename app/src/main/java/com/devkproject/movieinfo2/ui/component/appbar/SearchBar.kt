@@ -36,7 +36,7 @@ fun SearchBar(isAppBarVisible: MutableState<Boolean>, viewModel: MainViewModel) 
                 .focusRequester(focusRequester),
             value = text,
             colors = TextFieldDefaults.textFieldColors(
-                backgroundColor = blue,
+                backgroundColor = Color.White,
                 cursorColor = Color.Black,
                 disabledLabelColor = blue,
                 focusedIndicatorColor = Color.Transparent,

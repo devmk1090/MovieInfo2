@@ -22,6 +22,7 @@ import com.devkproject.movieinfo2.navigation.currentRoute
 import com.devkproject.movieinfo2.navigation.navigationTitle
 import com.devkproject.movieinfo2.ui.component.CircularProgressBar
 import com.devkproject.movieinfo2.ui.component.NavigationItem
+import com.devkproject.movieinfo2.ui.component.SearchUI
 import com.devkproject.movieinfo2.ui.component.appbar.AppBarWithArrow
 import com.devkproject.movieinfo2.ui.component.appbar.HomeAppBar
 import com.devkproject.movieinfo2.ui.component.appbar.SearchBar
@@ -30,6 +31,7 @@ import com.devkproject.movieinfo2.ui.theme.floatingActionBackground
 import com.devkproject.movieinfo2.utils.network.DataState
 import com.devkproject.movieinfo2.utils.networkconnection.ConnectionState
 import com.devkproject.movieinfo2.utils.networkconnection.connectivityState
+import com.devkproject.movieinfo2.utils.pagingLoadingState
 import kotlinx.coroutines.launch
 
 @Composable
@@ -140,9 +142,14 @@ fun MainScreen() {
             Column {
                 CircularProgressBar(isDisplayed = searchProgressBar.value, 0.1f)
                 if (isAppBarVisible.value.not()) {
-
+                    SearchUI(navController, mainViewModel.searchData) {
+                        isAppBarVisible.value = true
+                    }
                 }
             }
+        }
+        mainViewModel.searchData.pagingLoadingState {
+            searchProgressBar.value = it
         }
     }
 }

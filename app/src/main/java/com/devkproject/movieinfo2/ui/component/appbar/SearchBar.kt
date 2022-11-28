@@ -44,6 +44,7 @@ fun SearchBar(isAppBarVisible: MutableState<Boolean>, viewModel: MainViewModel) 
             ),
             onValueChange = {
                 text = it
+                viewModel.searchApi(it)
             },
             singleLine = true,
             trailingIcon = {

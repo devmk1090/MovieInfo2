@@ -27,7 +27,7 @@ class MainViewModel @Inject constructor(private val movieRepository: MovieReposi
             }.launchIn(viewModelScope)
         }
     }
-    
+
     @ExperimentalCoroutinesApi
     @FlowPreview
     fun searchApi(searchKey: String) {

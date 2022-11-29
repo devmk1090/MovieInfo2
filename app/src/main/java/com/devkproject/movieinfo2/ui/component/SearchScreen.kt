@@ -8,18 +8,25 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import coil.compose.rememberImagePainter
+import com.devkproject.movieinfo2.R
 import com.devkproject.movieinfo2.data.model.PageModel
 import com.devkproject.movieinfo2.data.remote.ApiUrl
+import com.devkproject.movieinfo2.navigation.NavigationScreen
 import com.devkproject.movieinfo2.ui.theme.backgroundColor
+import com.devkproject.movieinfo2.ui.theme.textColorSecondary
 import com.devkproject.movieinfo2.utils.network.DataState
 
 @Composable
@@ -40,7 +47,10 @@ fun SearchUI(navController: NavController, searchData: MutableState<DataState<Pa
                         modifier = Modifier
                             .padding(bottom = 8.dp)
                             .clickable {
-
+                                itemClick.invoke()
+                                navController.navigate(
+                                    NavigationScreen.MovieDetail.MOVIE_DETAIL.plus("/${item.id}")
+                                )
                             }
                     ) {
                         Image(
@@ -55,6 +65,19 @@ fun SearchUI(navController: NavController, searchData: MutableState<DataState<Pa
                                 .height(60.dp)
                                 .width(40.dp)
                         )
+                        Column {
+                            Text(
+                                text = item.title,
+                                modifier = Modifier.padding(start = 8.dp, top = 4.dp),
+                                fontWeight = FontWeight.SemiBold
+                            )
+                            Text(
+                                text = "${stringResource(R.string.rating_search)}${item.voteAverage}",
+                                color = textColorSecondary,
+                                fontSize = 10.sp,
+                                modifier = Modifier.padding(start = 8.dp)
+                            )
+                        }
                     }
                 })
             }

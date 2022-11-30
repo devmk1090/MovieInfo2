@@ -55,7 +55,7 @@ fun DrawerItem(item: Genre, selected: Boolean, onItemClick: (Genre) -> Unit) {
         Icon(
             Icons.Outlined.Movie, "", modifier = Modifier
                 .height(24.dp)
-                .padding(24.dp)
+                .width(24.dp)
         )
         Spacer(modifier = Modifier.width(7.dp))
         Text(

@@ -18,6 +18,7 @@ import com.devkproject.movieinfo2.ui.screens.bottomnavigation.popular.Popular
 import com.devkproject.movieinfo2.ui.screens.bottomnavigation.toprated.TopRated
 import com.devkproject.movieinfo2.ui.screens.bottomnavigation.upcoming.Upcoming
 import com.devkproject.movieinfo2.ui.screens.detail.MovieDetail
+import com.devkproject.movieinfo2.ui.screens.genre.GenreScreen
 
 @Composable
 fun Navigation(
@@ -44,6 +45,17 @@ fun Navigation(
             Upcoming(
                 navController = navController
             )
+        }
+        composable(
+            NavigationScreen.NAVIGATION_DRAWER_WITH_GENRE_ID,
+            arguments = listOf(navArgument(NavigationScreen.GENRE_ID) {
+                type = NavType.StringType
+            })
+        ) { backStack ->
+            val genreId = backStack.arguments?.getString(NavigationScreen.GENRE_ID)
+            genreId?.let {
+                GenreScreen(navController = navController, genreId)
+            }
         }
         composable(
             NavigationScreen.MovieDetail.MOVIE_DETAIL.plus(NavigationScreen.MovieDetail.MOVIE_DETAIL_PATH),

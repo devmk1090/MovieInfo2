@@ -13,17 +13,13 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.max
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import coil.compose.rememberImagePainter
-import com.devkproject.movieinfo2.R
 import com.devkproject.movieinfo2.data.model.PageModel
 import com.devkproject.movieinfo2.data.remote.ApiUrl
 import com.devkproject.movieinfo2.navigation.NavigationScreen
@@ -38,8 +34,7 @@ fun SearchUI(navController: NavController, searchData: MutableState<DataState<Pa
         modifier = Modifier
             .fillMaxWidth()
             .heightIn(0.dp)
-            .padding(start = 10.dp, end = 10.dp, top = 8.dp)
-            .clip(RoundedCornerShape(bottomStart = 15.dp, bottomEnd = 15.dp))
+            .padding(start = 10.dp, end = 10.dp, top = 8.dp, bottom = 56.dp)
             .background(color = backgroundColor)
     ) {
         searchData.value?.let {

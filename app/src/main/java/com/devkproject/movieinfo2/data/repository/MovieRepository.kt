@@ -47,6 +47,16 @@ class MovieRepository @Inject constructor(private val apiService: ApiService) {
         }
     }
 
+    suspend fun getSearch(searchKey: String): Flow<DataState<PageModel>> = flow {
+        emit(DataState.Loading)
+        try {
+            val searchResult = apiService.getSearch(searchKey)
+            emit(DataState.Success(searchResult))
+        } catch (e: Exception) {
+            emit(DataState.Error(e))
+        }
+    }
+
     suspend fun getRecommendedMovie(movieId: Int, page: Int): Flow<DataState<PageModel>> = flow {
         emit(DataState.Loading)
         try {

@@ -1,4 +1,4 @@
-package com.devkproject.movieinfo2.extensions
+package com.devkproject.movieinfo2.utils
 
 import android.content.Context
 import android.widget.Toast

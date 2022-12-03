@@ -34,6 +34,9 @@ interface ApiService {
         @Query("with_genres") genreId: String
     ): PageModel
 
+    @GET(ApiUrl.SEARCH_MOVIE)
+    suspend fun getSearch(@Query("query") searchKey: String): PageModel
+
     @GET(ApiUrl.RECOMMENDED_MOVIE)
     suspend fun getRecommendedMovie(@Path("movieId") movieId: Int, @Query("page") one: Int): PageModel
 

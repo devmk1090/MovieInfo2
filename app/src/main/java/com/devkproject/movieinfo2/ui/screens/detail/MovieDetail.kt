@@ -3,14 +3,17 @@ package com.devkproject.movieinfo2.ui.screens.detail
 import android.util.Log
 import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
@@ -38,6 +41,11 @@ import com.devkproject.movieinfo2.utils.pagingLoadingState
 
 @Composable
 fun MovieDetail(navController: NavController, movieId: Int) {
+
+    val lazyListState = rememberLazyListState()
+    var scrolledY = 0f
+    var previousOffset = 0
+
     val movieDetailViewModel = hiltViewModel<MovieDetailViewModel>()
     val progressBar = remember { mutableStateOf(false) }
     val movieDetail = movieDetailViewModel.movieDetail
@@ -57,76 +65,84 @@ fun MovieDetail(navController: NavController, movieId: Int) {
     ) {
         CircularProgressBar(isDisplayed = progressBar.value, verticalBias = 0.4f)
         movieDetail.value?.let { it ->
-            Log.d("501501", it.toString())
             if (it is DataState.Success<MovieDetail>) {
-                Column(modifier = Modifier.verticalScroll(rememberScrollState())) {
-                    Image(
-                        painter = rememberImagePainter(ApiUrl.POSTER_URL.plus(it.data.poster_path)),
-                        contentDescription = null,
-                        contentScale = ContentScale.FillWidth,
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .height(600.dp)
-                    )
-                    Column(
-                        modifier = Modifier
-                            .fillMaxSize()
-                            .padding(start = 15.dp, end = 15.dp)
-                    ) {
-                        Text(
-                            text = it.data.title,
-                            modifier = Modifier.padding(top = 10.dp),
-                            color = textColorPrimary,
-                            fontSize = 24.sp,
-                            fontWeight = FontWeight.W700,
-                            maxLines = 1,
-                            overflow = TextOverflow.Ellipsis //..
-                        )
-                        Row(
+                LazyColumn(Modifier.fillMaxSize(), lazyListState) {
+                    item {
+                        Image(
+                            painter = rememberImagePainter(ApiUrl.POSTER_URL.plus(it.data.poster_path)),
+                            contentDescription = null,
+                            contentScale = ContentScale.FillWidth,
                             modifier = Modifier
+//                                .graphicsLayer {
+//                                    scrolledY += lazyListState.firstVisibleItemScrollOffset - previousOffset
+//                                    translationY = scrolledY * 0.5f
+//                                    previousOffset = lazyListState.firstVisibleItemScrollOffset
+//                                }
                                 .fillMaxWidth()
-                                .padding(bottom = 10.dp, top = 10.dp)
+                                .height(600.dp)
+                        )
+                        Column(
+                            modifier = Modifier
+                                .fillMaxSize()
+                                .padding(start = 15.dp, end = 15.dp)
                         ) {
-                            Column(Modifier.weight(1f)) {
-                                SubtitlePrimary(text = it.data.original_language)
-                                SubtitleSecondary(text = stringResource(R.string.language))
+                            Text(
+                                text = it.data.title,
+                                modifier = Modifier.padding(top = 10.dp),
+                                color = textColorPrimary,
+                                fontSize = 24.sp,
+                                fontWeight = FontWeight.W700,
+                                maxLines = 1,
+                                overflow = TextOverflow.Ellipsis //..
+                            )
+                            Row(
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .padding(bottom = 10.dp, top = 10.dp)
+                            ) {
+                                Column(Modifier.weight(1f)) {
+                                    SubtitlePrimary(text = it.data.original_language)
+                                    SubtitleSecondary(text = stringResource(R.string.language))
+                                }
+                                Column(Modifier.weight(1f)) {
+                                    SubtitlePrimary(text = it.data.vote_average.toString(),)
+                                    SubtitleSecondary(text = stringResource(R.string.rating))
+                                }
+                                Column(Modifier.weight(1f)) {
+                                    SubtitlePrimary(text = it.data.runtime.hourMinutes())
+                                    SubtitleSecondary(text = stringResource(R.string.duration))
+                                }
+                                Column(Modifier.weight(1f)) {
+                                    SubtitlePrimary(text = it.data.release_date)
+                                    SubtitleSecondary(text = stringResource(R.string.release_date))
+                                }
                             }
-                            Column(Modifier.weight(1f)) {
-                                SubtitlePrimary(text = it.data.vote_average.toString(),)
-                                SubtitleSecondary(text = stringResource(R.string.rating))
+                            Text(
+                                text = stringResource(R.string.description),
+                                color = textColorPrimary,
+                                fontSize = 16.sp,
+                                fontWeight = FontWeight.SemiBold
+                            )
+                            Text(
+                                text = it.data.overview,
+                                color = textColorSecondary,
+                                fontSize = 14.sp,
+                                modifier = Modifier.padding(bottom = 10.dp)
+                            )
+                            recommendedMovie.value?.let {
+                                if (it is DataState.Success<PageModel>) {
+                                    RecommendedMovie(navController, it.data.results)
+                                }
                             }
-                            Column(Modifier.weight(1f)) {
-                                SubtitlePrimary(text = it.data.runtime.hourMinutes())
-                                SubtitleSecondary(text = stringResource(R.string.duration))
+                            artistCrew.value?.let {
+                                if (it is DataState.Success<ArtistCrew>) {
+                                    ArtistAndCrew(navController, it.data.cast)
+                                }
                             }
-                            Column(Modifier.weight(1f)) {
-                                SubtitlePrimary(text = it.data.release_date)
-                                SubtitleSecondary(text = stringResource(R.string.release_date))
-                            }
-                        }
-                        Text(
-                            text = stringResource(R.string.description),
-                            color = textColorPrimary,
-                            fontSize = 16.sp,
-                            fontWeight = FontWeight.SemiBold
-                        )
-                        Text(
-                            text = it.data.overview,
-                            color = textColorSecondary,
-                            fontSize = 14.sp,
-                            modifier = Modifier.padding(bottom = 10.dp)
-                        )
-                        recommendedMovie.value?.let {
-                            if (it is DataState.Success<PageModel>) {
-                                RecommendedMovie(navController, it.data.results)
-                            }
-                        }
-                        artistCrew.value?.let {
-                            if (it is DataState.Success<ArtistCrew>) {
-                                ArtistAndCrew(navController, it.data.cast)
-                            }
-                        }
                     }
+
+                    }
+
                 }
             }
         }

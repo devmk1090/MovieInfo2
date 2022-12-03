@@ -7,6 +7,7 @@ object NavigationScreen {
     const val UP_COMING = "upcoming"
     const val GENRE_ID = "genreId"
     const val NAVIGATION_DRAWER = "navigation_drawer_item"
+    const val NAVIGATION_DRAWER_WITH_GENRE_ID = "navigation_drawer_item/{$GENRE_ID}"
 
     object MovieDetail {
         const val MOVIE_DETAIL = "movieDetail"

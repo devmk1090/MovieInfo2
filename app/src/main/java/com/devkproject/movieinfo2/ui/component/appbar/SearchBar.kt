@@ -21,6 +21,7 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.devkproject.movieinfo2.ui.screens.MainViewModel
 import com.devkproject.movieinfo2.ui.theme.blue
+import com.devkproject.movieinfo2.ui.theme.searchBarColor
 
 @Composable
 fun SearchBar(isAppBarVisible: MutableState<Boolean>, viewModel: MainViewModel) {
@@ -36,7 +37,7 @@ fun SearchBar(isAppBarVisible: MutableState<Boolean>, viewModel: MainViewModel) 
                 .focusRequester(focusRequester),
             value = text,
             colors = TextFieldDefaults.textFieldColors(
-                backgroundColor = blue,
+                backgroundColor = searchBarColor,
                 cursorColor = Color.Black,
                 disabledLabelColor = blue,
                 focusedIndicatorColor = Color.Transparent,
@@ -44,6 +45,7 @@ fun SearchBar(isAppBarVisible: MutableState<Boolean>, viewModel: MainViewModel) 
             ),
             onValueChange = {
                 text = it
+                viewModel.searchApi(it)
             },
             singleLine = true,
             trailingIcon = {

@@ -4,6 +4,7 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Search
+import androidx.compose.material.icons.filled.Star
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -21,6 +22,7 @@ import com.devkproject.movieinfo2.navigation.currentRoute
 import com.devkproject.movieinfo2.navigation.navigationTitle
 import com.devkproject.movieinfo2.ui.component.CircularProgressBar
 import com.devkproject.movieinfo2.ui.component.NavigationItem
+import com.devkproject.movieinfo2.ui.component.SearchUI
 import com.devkproject.movieinfo2.ui.component.appbar.AppBarWithArrow
 import com.devkproject.movieinfo2.ui.component.appbar.HomeAppBar
 import com.devkproject.movieinfo2.ui.component.appbar.SearchBar
@@ -29,6 +31,7 @@ import com.devkproject.movieinfo2.ui.theme.floatingActionBackground
 import com.devkproject.movieinfo2.utils.network.DataState
 import com.devkproject.movieinfo2.utils.networkconnection.ConnectionState
 import com.devkproject.movieinfo2.utils.networkconnection.connectivityState
+import com.devkproject.movieinfo2.utils.pagingLoadingState
 import kotlinx.coroutines.launch
 
 @Composable
@@ -103,11 +106,11 @@ fun MainScreen() {
                 NavigationScreen.HOME, NavigationScreen.POPULAR, NavigationScreen.TOP_RATED, NavigationScreen.UP_COMING -> {
                     FloatingActionButton(
                         onClick = {
-                            isAppBarVisible.value = false
+                            //TODO 찜 목록 or 설정 페이지
                         },
                         backgroundColor = floatingActionBackground
                     ) {
-                        Icon(Icons.Filled.Search, "", tint = Color.White)
+                        Icon(Icons.Filled.Star, "", tint = Color.White)
                     }
                 }
             }
@@ -139,9 +142,14 @@ fun MainScreen() {
             Column {
                 CircularProgressBar(isDisplayed = searchProgressBar.value, 0.1f)
                 if (isAppBarVisible.value.not()) {
-
+                    SearchUI(navController, mainViewModel.searchData) {
+                        isAppBarVisible.value = true
+                    }
                 }
             }
+        }
+        mainViewModel.searchData.pagingLoadingState {
+            searchProgressBar.value = it
         }
     }
 }

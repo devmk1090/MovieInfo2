@@ -20,7 +20,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import androidx.paging.PagingData
 import androidx.paging.compose.LazyPagingItems
@@ -32,6 +34,7 @@ import com.devkproject.movieinfo2.navigation.NavigationScreen
 import com.devkproject.movieinfo2.navigation.currentRoute
 import com.devkproject.movieinfo2.ui.theme.backgroundColor
 import com.devkproject.movieinfo2.ui.theme.cornerRadius10
+import com.devkproject.movieinfo2.ui.theme.textColorPrimary
 import com.devkproject.movieinfo2.utils.items
 import kotlinx.coroutines.flow.Flow
 
@@ -89,9 +92,19 @@ fun MovieItemView(context: Context, item: MovieItem, navController: NavControlle
         )
         Text(
             text = item.title,
-            color = Color.Blue,
+            color = Color.Black,
+            fontSize = 18.sp,
+            fontWeight = FontWeight.Bold
         )
-        Text(text = item.releaseDate)
-        Text(text = item.voteAverage.toString())
+        Text(
+            text = item.releaseDate,
+            color = Color.Black,
+            fontSize = 16.sp,
+        )
+        Text(
+            text = item.voteAverage.toString(),
+            color = Color.Black,
+            fontSize = 16.sp,
+        )
     }
 }

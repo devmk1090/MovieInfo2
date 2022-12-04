@@ -32,6 +32,7 @@ import com.devkproject.movieinfo2.data.model.moviedetail.MovieDetail
 import com.devkproject.movieinfo2.data.remote.ApiUrl
 import com.devkproject.movieinfo2.navigation.NavigationScreen
 import com.devkproject.movieinfo2.ui.component.CircularProgressBar
+import com.devkproject.movieinfo2.ui.component.appbar.AppBarWithArrow
 import com.devkproject.movieinfo2.ui.component.text.SubtitlePrimary
 import com.devkproject.movieinfo2.ui.component.text.SubtitleSecondary
 import com.devkproject.movieinfo2.ui.theme.*
@@ -68,6 +69,9 @@ fun MovieDetail(navController: NavController, movieId: Int) {
             if (it is DataState.Success<MovieDetail>) {
                 LazyColumn(Modifier.fillMaxSize(), lazyListState) {
                     item {
+                        AppBarWithArrow(title = it.data.title) {
+                            
+                        }
                         Image(
                             painter = rememberImagePainter(ApiUrl.POSTER_URL.plus(it.data.poster_path)),
                             contentDescription = null,

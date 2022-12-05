@@ -7,6 +7,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
+import androidx.compose.material.IconButton
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -32,7 +33,7 @@ import com.devkproject.movieinfo2.data.model.moviedetail.MovieDetail
 import com.devkproject.movieinfo2.data.remote.ApiUrl
 import com.devkproject.movieinfo2.navigation.NavigationScreen
 import com.devkproject.movieinfo2.ui.component.CircularProgressBar
-import com.devkproject.movieinfo2.ui.component.appbar.AppBarWithArrow
+import com.devkproject.movieinfo2.ui.component.appbar.AppBarOnlyArrow
 import com.devkproject.movieinfo2.ui.component.text.SubtitlePrimary
 import com.devkproject.movieinfo2.ui.component.text.SubtitleSecondary
 import com.devkproject.movieinfo2.ui.theme.*
@@ -69,22 +70,19 @@ fun MovieDetail(navController: NavController, movieId: Int) {
             if (it is DataState.Success<MovieDetail>) {
                 LazyColumn(Modifier.fillMaxSize(), lazyListState) {
                     item {
-                        AppBarWithArrow(title = it.data.title) {
-                            
+                        Box {
+                            Image(
+                                painter = rememberImagePainter(ApiUrl.POSTER_URL.plus(it.data.poster_path)),
+                                contentDescription = null,
+                                contentScale = ContentScale.FillWidth,
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .height(600.dp)
+                            )
+                            AppBarOnlyArrow {
+                                navController.popBackStack()
+                            }
                         }
-                        Image(
-                            painter = rememberImagePainter(ApiUrl.POSTER_URL.plus(it.data.poster_path)),
-                            contentDescription = null,
-                            contentScale = ContentScale.FillWidth,
-                            modifier = Modifier
-//                                .graphicsLayer {
-//                                    scrolledY += lazyListState.firstVisibleItemScrollOffset - previousOffset
-//                                    translationY = scrolledY * 0.5f
-//                                    previousOffset = lazyListState.firstVisibleItemScrollOffset
-//                                }
-                                .fillMaxWidth()
-                                .height(600.dp)
-                        )
                         Column(
                             modifier = Modifier
                                 .fillMaxSize()

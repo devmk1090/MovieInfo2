@@ -17,6 +17,8 @@ object ApiUrl {
 
     const val SEARCH_MOVIE ="search/movie?api_key=$API_KEY&language=en-US&page=1&include_adult=false"
 
+    const val MOVIE_VIDEO ="movie/{movieId}/videos?api_key=$API_KEY&language=en-US"
+
     const val RECOMMENDED_MOVIE ="movie/{movieId}/recommendations?api_key=$API_KEY&language=en-US"
 
     const val MOVIE_CREDIT ="movie/{movieId}/credits?api_key=$API_KEY&language=en-US"
@@ -26,4 +28,9 @@ object ApiUrl {
     const val YOUTUBE_BASE_URL = "https://www.youtube.com/watch?v="
     const val YOUTUBE_THUMBNAIL_BASE_URL = "https://img.youtube.com/vi/"
     const val YOUTUBE_THUMBNAIL_URL_JPG = "/0.jpg"
+
+    @JvmStatic
+    fun getYoutubeVideoPath(key: String?): String {
+        return YOUTUBE_BASE_URL + key
+    }
 }

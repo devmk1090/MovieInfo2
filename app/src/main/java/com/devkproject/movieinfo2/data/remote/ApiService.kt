@@ -5,6 +5,7 @@ import com.devkproject.movieinfo2.data.model.PageModel
 import com.devkproject.movieinfo2.data.model.artist.ArtistCrew
 import com.devkproject.movieinfo2.data.model.artist.ArtistDetail
 import com.devkproject.movieinfo2.data.model.moviedetail.MovieDetail
+import com.devkproject.movieinfo2.data.model.video.Videos
 import retrofit2.http.GET
 import retrofit2.http.Path
 import retrofit2.http.Query
@@ -36,6 +37,9 @@ interface ApiService {
 
     @GET(ApiUrl.SEARCH_MOVIE)
     suspend fun getSearch(@Query("query") searchKey: String): PageModel
+
+    @GET(ApiUrl.MOVIE_VIDEO)
+    suspend fun getMovieVideos(@Path("movieId") movieId: Int): Videos
 
     @GET(ApiUrl.RECOMMENDED_MOVIE)
     suspend fun getRecommendedMovie(@Path("movieId") movieId: Int, @Query("page") one: Int): PageModel

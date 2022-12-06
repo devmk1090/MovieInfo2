@@ -1,5 +1,7 @@
 package com.devkproject.movieinfo2.ui.screens.detail
 
+import android.content.Intent
+import android.net.Uri
 import android.util.Log
 import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
@@ -16,11 +18,13 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import coil.compose.rememberImagePainter
@@ -30,6 +34,8 @@ import com.devkproject.movieinfo2.data.model.PageModel
 import com.devkproject.movieinfo2.data.model.artist.ArtistCrew
 import com.devkproject.movieinfo2.data.model.artist.Cast
 import com.devkproject.movieinfo2.data.model.moviedetail.MovieDetail
+import com.devkproject.movieinfo2.data.model.video.VideoItems
+import com.devkproject.movieinfo2.data.model.video.Videos
 import com.devkproject.movieinfo2.data.remote.ApiUrl
 import com.devkproject.movieinfo2.navigation.NavigationScreen
 import com.devkproject.movieinfo2.ui.component.CircularProgressBar
@@ -53,11 +59,13 @@ fun MovieDetail(navController: NavController, movieId: Int) {
     val movieDetail = movieDetailViewModel.movieDetail
     val recommendedMovie = movieDetailViewModel.recommendedMovie
     val artistCrew = movieDetailViewModel.artistCrew
+    val movieVideo = movieDetailViewModel.videoList
 
     LaunchedEffect(true) {
         movieDetailViewModel.movieDetail(movieId)
         movieDetailViewModel.recommendedMovie(movieId, 1)
         movieDetailViewModel.movieCredit(movieId)
+        movieDetailViewModel.movieVideo(movieId)
     }
 
     Column(
@@ -141,6 +149,13 @@ fun MovieDetail(navController: NavController, movieId: Int) {
                                     ArtistAndCrew(navController, it.data.cast)
                                 }
                             }
+                            movieVideo.value?.let {
+                                if (it is DataState.Success<Videos>) {
+                                    AddVideo(navController, it.data.results)
+                                    Log.d("501501", it.data.results.toString())
+                                }
+                            }
+
                     }
 
                     }
@@ -153,6 +168,34 @@ fun MovieDetail(navController: NavController, movieId: Int) {
         }
         movieDetail.pagingLoadingState {
             progressBar.value = it
+        }
+    }
+}
+
+@Composable
+fun AddVideo(navController: NavController?, videoList: List<VideoItems>) {
+    val context = LocalContext.current
+    Column(modifier = Modifier.padding(bottom = 10.dp)) {
+        Text(
+            text = stringResource(R.string.video),
+            color = textColorPrimary,
+            fontSize = 16.sp,
+            fontWeight = FontWeight.SemiBold
+        )
+        LazyRow(modifier = Modifier.fillMaxHeight()) {
+            items(videoList, itemContent = { item ->
+                ConstraintLayout(
+                    modifier = Modifier
+                        .width(150.dp)
+                        .height(100.dp)
+                        .clickable {
+                            val playVideoIntent = Intent(Intent.ACTION_VIEW, Uri.parse(ApiUrl.getYoutubeVideoPath(item.key)))
+                            context.startActivity(playVideoIntent)
+                        }
+                ) {
+
+                }
+            })
         }
     }
 }
@@ -224,9 +267,9 @@ fun ArtistAndCrew(navController: NavController?, cast: List<Cast>) {
                         contentScale = ContentScale.FillBounds,
                         modifier = Modifier
                             .padding(bottom = 5.dp)
-                            .height(80.dp)
+                            .height(120.dp)
                             .width(80.dp)
-                            .cornerRadius40()
+                            .cornerRadius10()
                             .clickable {
                                 navController?.navigate(
                                     NavigationScreen.ArtistDetail.ARTIST_DETAIL.plus(

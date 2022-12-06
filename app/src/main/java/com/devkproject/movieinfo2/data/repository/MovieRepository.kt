@@ -7,6 +7,7 @@ import com.devkproject.movieinfo2.data.model.PageModel
 import com.devkproject.movieinfo2.data.model.artist.ArtistCrew
 import com.devkproject.movieinfo2.data.model.artist.ArtistDetail
 import com.devkproject.movieinfo2.data.model.moviedetail.MovieDetail
+import com.devkproject.movieinfo2.data.model.video.Videos
 import com.devkproject.movieinfo2.data.remote.ApiService
 import com.devkproject.movieinfo2.data.remote.paging.*
 import com.devkproject.movieinfo2.utils.network.DataState
@@ -52,6 +53,16 @@ class MovieRepository @Inject constructor(private val apiService: ApiService) {
         try {
             val searchResult = apiService.getSearch(searchKey)
             emit(DataState.Success(searchResult))
+        } catch (e: Exception) {
+            emit(DataState.Error(e))
+        }
+    }
+
+    suspend fun getMovieVideo(movieId: Int): Flow<DataState<Videos>> = flow {
+        emit(DataState.Loading)
+        try {
+            val movieVideo = apiService.getMovieVideos(movieId)
+            emit(DataState.Success(movieVideo))
         } catch (e: Exception) {
             emit(DataState.Error(e))
         }

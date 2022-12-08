@@ -9,16 +9,20 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.Card
 import androidx.compose.material.IconButton
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
@@ -51,8 +55,6 @@ import com.devkproject.movieinfo2.utils.pagingLoadingState
 fun MovieDetail(navController: NavController, movieId: Int) {
 
     val lazyListState = rememberLazyListState()
-    var scrolledY = 0f
-    var previousOffset = 0
 
     val movieDetailViewModel = hiltViewModel<MovieDetailViewModel>()
     val progressBar = remember { mutableStateOf(false) }
@@ -182,17 +184,36 @@ fun AddVideo(navController: NavController?, videoList: List<VideoItems>) {
             fontSize = 16.sp,
             fontWeight = FontWeight.SemiBold
         )
-        LazyRow(modifier = Modifier.fillMaxHeight()) {
+        LazyRow(
+            horizontalArrangement = Arrangement.spacedBy(8.dp),
+            contentPadding = PaddingValues(vertical = 12.dp)
+        ) {
             items(videoList, itemContent = { item ->
-                ConstraintLayout(
-                    modifier = Modifier
-                        .width(150.dp)
-                        .height(100.dp)
+                Card(modifier = Modifier
+                    .height(90.dp)
+                    .width(120.dp),
+                    shape = RoundedCornerShape(8.dp)
+                ) {
+                    Box(modifier = Modifier
+                        .fillMaxSize()
                         .clickable {
-                            val playVideoIntent = Intent(Intent.ACTION_VIEW, Uri.parse(ApiUrl.getYoutubeVideoPath(item.key)))
+                            val playVideoIntent = Intent(
+                                Intent.ACTION_VIEW,
+                                Uri.parse(ApiUrl.getYoutubeVideoPath(item.key))
+                            )
                             context.startActivity(playVideoIntent)
                         }
-                ) {
+                    ) {
+                        Image(
+                            painter = rememberImagePainter(ApiUrl.getYoutubeVideoThumbnail(item.key)),
+                            contentDescription = null,
+                            modifier = Modifier
+                                .align(Alignment.Center),
+                            contentScale = ContentScale.Crop
+                        )
+                        Image(painter = painterResource(id = R.drawable.ic_video_play), contentDescription = null, modifier = Modifier.align(
+                            Alignment.Center))
+                    }
 
                 }
             })

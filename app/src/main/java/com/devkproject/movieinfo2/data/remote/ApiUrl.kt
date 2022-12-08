@@ -33,4 +33,9 @@ object ApiUrl {
     fun getYoutubeVideoPath(key: String?): String {
         return YOUTUBE_BASE_URL + key
     }
+
+    @JvmStatic
+    fun getYoutubeVideoThumbnail(key: String?): String {
+        return YOUTUBE_THUMBNAIL_BASE_URL + key + YOUTUBE_THUMBNAIL_URL_JPG
+    }
 }

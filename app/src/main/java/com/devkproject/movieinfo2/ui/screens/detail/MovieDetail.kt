@@ -141,9 +141,9 @@ fun MovieDetail(navController: NavController, movieId: Int) {
                                 fontSize = 14.sp,
                                 modifier = Modifier.padding(bottom = 10.dp)
                             )
-                            recommendedMovie.value?.let {
-                                if (it is DataState.Success<PageModel>) {
-                                    RecommendedMovie(navController, it.data.results)
+                            movieVideo.value?.let {
+                                if (it is DataState.Success<Videos>) {
+                                    AddVideo(navController, it.data.results)
                                 }
                             }
                             artistCrew.value?.let {
@@ -151,17 +151,13 @@ fun MovieDetail(navController: NavController, movieId: Int) {
                                     ArtistAndCrew(navController, it.data.cast)
                                 }
                             }
-                            movieVideo.value?.let {
-                                if (it is DataState.Success<Videos>) {
-                                    AddVideo(navController, it.data.results)
-                                    Log.d("501501", it.data.results.toString())
+                            recommendedMovie.value?.let {
+                                if (it is DataState.Success<PageModel>) {
+                                    RecommendedMovie(navController, it.data.results)
                                 }
                             }
-
+                        }
                     }
-
-                    }
-
                 }
             }
         }
@@ -186,16 +182,14 @@ fun AddVideo(navController: NavController?, videoList: List<VideoItems>) {
         )
         LazyRow(
             horizontalArrangement = Arrangement.spacedBy(8.dp),
-            contentPadding = PaddingValues(vertical = 12.dp)
         ) {
             items(videoList, itemContent = { item ->
-                Card(modifier = Modifier
-                    .height(90.dp)
-                    .width(120.dp),
-                    shape = RoundedCornerShape(8.dp)
+                Column(
+                    modifier = Modifier.padding(0.dp, 5.dp)
                 ) {
                     Box(modifier = Modifier
-                        .fillMaxSize()
+                        .height(180.dp)
+                        .width(240.dp)
                         .clickable {
                             val playVideoIntent = Intent(
                                 Intent.ACTION_VIEW,
@@ -208,11 +202,16 @@ fun AddVideo(navController: NavController?, videoList: List<VideoItems>) {
                             painter = rememberImagePainter(ApiUrl.getYoutubeVideoThumbnail(item.key)),
                             contentDescription = null,
                             modifier = Modifier
-                                .align(Alignment.Center),
-                            contentScale = ContentScale.Crop
+                                .fillMaxSize()
+                                .align(Alignment.Center)
+                                .cornerRadius10(),
+                            contentScale = ContentScale.FillWidth
                         )
-                        Image(painter = painterResource(id = R.drawable.ic_video_play), contentDescription = null, modifier = Modifier.align(
-                            Alignment.Center))
+                        Image(
+                            painter = painterResource(id = R.drawable.ic_video_play),
+                            contentDescription = null,
+                            modifier = Modifier.align(Alignment.Center)
+                        )
                     }
 
                 }

@@ -78,7 +78,7 @@ fun Navigation(
             label = stringResource(R.string.artist_detail)
             val artistId = it.arguments?.getInt(NavigationScreen.ArtistDetail.ARTIST_ID)
             if (artistId != null) {
-                ArtistDetail(artistId)
+                ArtistDetail(navController = navController, artistId)
             }
         }
     }

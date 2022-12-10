@@ -13,14 +13,14 @@ import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.unit.dp
 
 @Composable
-fun AppBarOnlyArrow(pressOnBack: () -> Unit) {
+fun AppBarOnlyArrow(color: Color, pressOnBack: () -> Unit) {
     Image(
         imageVector = Icons.Filled.ArrowBack,
-        colorFilter = ColorFilter.tint(Color.White),
+        colorFilter = ColorFilter.tint(color),
         contentDescription = null,
         modifier = Modifier
-            .size(48.dp)
-            .padding(start = 8.dp, top = 8.dp, bottom = 8.dp)
+            .size(36.dp)
+            .padding(start = 2.dp, top = 10.dp)
             .clickable {
                 pressOnBack()
             }

@@ -19,6 +19,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
@@ -74,6 +75,7 @@ fun MovieDetail(navController: NavController, movieId: Int) {
         modifier = Modifier
             .fillMaxSize()
             .background(backgroundColor)
+            .padding(start = 8.dp, end = 8.dp)
     ) {
         CircularProgressBar(isDisplayed = progressBar.value, verticalBias = 0.4f)
         movieDetail.value?.let { it ->
@@ -88,15 +90,15 @@ fun MovieDetail(navController: NavController, movieId: Int) {
                                 modifier = Modifier
                                     .fillMaxWidth()
                                     .height(600.dp)
+                                    .cornerRadius10()
                             )
-                            AppBarOnlyArrow {
+                            AppBarOnlyArrow(color = Color.White) {
                                 navController.popBackStack()
                             }
                         }
                         Column(
                             modifier = Modifier
                                 .fillMaxSize()
-                                .padding(start = 15.dp, end = 15.dp)
                         ) {
                             Text(
                                 text = it.data.title,

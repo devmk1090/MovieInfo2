@@ -11,12 +11,14 @@ import androidx.compose.material.icons.outlined.Movie
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.devkproject.movieinfo2.data.model.moviedetail.Genre
 import com.devkproject.movieinfo2.navigation.NavigationScreen
 import com.devkproject.movieinfo2.navigation.currentRoute
+import com.devkproject.movieinfo2.ui.theme.textColorPrimary
 
 @Composable
 fun DrawerUI(
@@ -27,8 +29,18 @@ fun DrawerUI(
     LazyColumn(
         modifier = Modifier
             .fillMaxHeight()
+            .padding(start = 10.dp, top = 10.dp, bottom = 10.dp)
     ) {
+        item {
+            Text(
+                text = "장르를 선택하세요",
+                fontSize = 24.sp,
+                color = textColorPrimary,
+                fontWeight = FontWeight.Bold
+            )
+        }
         items(items = genres, itemContent = { item ->
+
             DrawerItem(
                 item = item,
                 selected = currentRoute(navController) == "",
@@ -50,7 +62,6 @@ fun DrawerItem(item: Genre, selected: Boolean, onItemClick: (Genre) -> Unit) {
             .fillMaxWidth()
             .clickable(onClick = { onItemClick(item) })
             .height(45.dp)
-            .padding(start = 10.dp)
     ) {
         Icon(
             Icons.Outlined.Movie, "", modifier = Modifier

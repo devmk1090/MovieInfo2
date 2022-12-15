@@ -2,6 +2,7 @@ package com.devkproject.movieinfo2.data.remote
 
 import com.devkproject.movieinfo2.data.model.Genres
 import com.devkproject.movieinfo2.data.model.PageModel
+import com.devkproject.movieinfo2.data.model.TvPageModel
 import com.devkproject.movieinfo2.data.model.artist.ArtistCrew
 import com.devkproject.movieinfo2.data.model.artist.ArtistDetail
 import com.devkproject.movieinfo2.data.model.moviedetail.MovieDetail
@@ -11,7 +12,7 @@ import retrofit2.http.Path
 import retrofit2.http.Query
 
 interface ApiService {
-    @GET(ApiUrl.MOVIE_LIST)
+    @GET(ApiUrl.NOW_PLAYING_MOVIE_LIST)
     suspend fun getNowPlayingMovieList(@Query("page") page: Int): PageModel
 
     @GET(ApiUrl.POPULAR_MOVIE_LIST)
@@ -50,4 +51,7 @@ interface ApiService {
     @GET(ApiUrl.ARTIST_DETAIL)
     suspend fun getArtistDetail(@Path("personId") personId: Int): ArtistDetail
 
+    //TV
+    @GET(ApiUrl.TV_POPULAR)
+    suspend fun getTvPopularList(@Query("page") page: Int): TvPageModel
 }

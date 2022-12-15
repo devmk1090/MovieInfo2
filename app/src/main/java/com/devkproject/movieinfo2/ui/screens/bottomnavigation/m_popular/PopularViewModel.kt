@@ -1,4 +1,4 @@
-package com.devkproject.movieinfo2.ui.screens.bottomnavigation.upcoming
+package com.devkproject.movieinfo2.ui.screens.bottomnavigation.m_popular
 
 
 import androidx.lifecycle.ViewModel
@@ -9,6 +9,6 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
 @HiltViewModel
-class UpComingViewModel @Inject constructor(movieRepository: MovieRepository) : ViewModel() {
-    val upcomingMovies = movieRepository.upcomingPagingDataSource().cachedIn(viewModelScope)
+class PopularViewModel @Inject constructor(movieRepository: MovieRepository) : ViewModel() {
+    val popularMovies = movieRepository.popularPagingDataSource().cachedIn(viewModelScope)
 }

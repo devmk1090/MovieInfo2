@@ -5,7 +5,7 @@ object ApiUrl {
     const val BASE_URL = "https://api.themoviedb.org/3/"
     const val POSTER_URL = "https://image.tmdb.org/t/p/w342"
 
-    const val MOVIE_LIST = "movie/now_playing?api_key=$API_KEY&language=ko"
+    const val NOW_PLAYING_MOVIE_LIST = "movie/now_playing?api_key=$API_KEY&language=ko"
     const val POPULAR_MOVIE_LIST = "movie/popular?api_key=$API_KEY&language=ko"
     const val TOP_RATED_MOVIE_LIST = "movie/top_rated?api_key=$API_KEY&language=ko"
     const val UP_COMING_MOVIE_LIST = "movie/upcoming?api_key=$API_KEY&language=ko"
@@ -23,6 +23,9 @@ object ApiUrl {
 
     const val MOVIE_CREDIT ="movie/{movieId}/credits?api_key=$API_KEY&language=ko"
     const val ARTIST_DETAIL ="person/{personId}?api_key=$API_KEY&language=ko"
+
+    //TV
+    const val TV_POPULAR = "tv/popular?api_key=$API_KEY&language=ko"
 
     //Youtube
     const val YOUTUBE_BASE_URL = "https://www.youtube.com/watch?v="

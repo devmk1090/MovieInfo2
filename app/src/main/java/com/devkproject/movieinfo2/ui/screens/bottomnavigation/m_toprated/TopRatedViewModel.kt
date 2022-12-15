@@ -1,4 +1,4 @@
-package com.devkproject.movieinfo2.ui.screens.bottomnavigation.popular
+package com.devkproject.movieinfo2.ui.screens.bottomnavigation.m_toprated
 
 
 import androidx.lifecycle.ViewModel
@@ -9,6 +9,6 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
 @HiltViewModel
-class PopularViewModel @Inject constructor(movieRepository: MovieRepository) : ViewModel() {
-    val popularMovies = movieRepository.popularPagingDataSource().cachedIn(viewModelScope)
+class TopRatedViewModel @Inject constructor(movieRepository: MovieRepository) : ViewModel() {
+    val topRatedMovies = movieRepository.topRatedPagingDataSource().cachedIn(viewModelScope)
 }

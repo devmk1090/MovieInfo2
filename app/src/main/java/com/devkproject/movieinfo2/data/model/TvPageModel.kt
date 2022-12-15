@@ -2,7 +2,7 @@ package com.devkproject.movieinfo2.data.model
 
 import com.google.gson.annotations.SerializedName
 
-data class PageModel(
+data class TvPageModel(
     @SerializedName("page")
     val page: Int,
     @SerializedName("total_pages")
@@ -10,5 +10,5 @@ data class PageModel(
     @SerializedName("total_results")
     val totalResults: Int,
     @SerializedName("results")
-    val results: List<MovieItem>,
+    val results: List<TvItem>,
 )

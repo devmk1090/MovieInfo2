@@ -17,6 +17,7 @@ import com.devkproject.movieinfo2.ui.screens.bottomnavigation.m_nowplaying.NowPl
 import com.devkproject.movieinfo2.ui.screens.bottomnavigation.m_popular.Popular
 import com.devkproject.movieinfo2.ui.screens.bottomnavigation.m_toprated.TopRated
 import com.devkproject.movieinfo2.ui.screens.bottomnavigation.m_upcoming.Upcoming
+import com.devkproject.movieinfo2.ui.screens.bottomnavigation.tv_popular.TvPopular
 import com.devkproject.movieinfo2.ui.screens.detail.MovieDetail
 import com.devkproject.movieinfo2.ui.screens.genre.GenreScreen
 
@@ -80,6 +81,11 @@ fun Navigation(
             if (artistId != null) {
                 ArtistDetail(navController = navController, artistId)
             }
+        }
+
+        //TV
+        composable(NavigationScreen.TV_POPULAR) {
+            TvPopular(navController = navController)
         }
     }
 }

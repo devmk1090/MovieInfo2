@@ -1,4 +1,4 @@
-package com.devkproject.movieinfo2.ui.screens.bottomnavigation.nowplaying
+package com.devkproject.movieinfo2.ui.screens.bottomnavigation.m_nowplaying
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope

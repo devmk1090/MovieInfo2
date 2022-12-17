@@ -13,10 +13,11 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.navArgument
 import com.devkproject.movieinfo2.R
 import com.devkproject.movieinfo2.ui.screens.artistdetail.ArtistDetail
-import com.devkproject.movieinfo2.ui.screens.bottomnavigation.nowplaying.NowPlaying
-import com.devkproject.movieinfo2.ui.screens.bottomnavigation.popular.Popular
-import com.devkproject.movieinfo2.ui.screens.bottomnavigation.toprated.TopRated
-import com.devkproject.movieinfo2.ui.screens.bottomnavigation.upcoming.Upcoming
+import com.devkproject.movieinfo2.ui.screens.bottomnavigation.m_nowplaying.NowPlaying
+import com.devkproject.movieinfo2.ui.screens.bottomnavigation.m_popular.Popular
+import com.devkproject.movieinfo2.ui.screens.bottomnavigation.m_toprated.TopRated
+import com.devkproject.movieinfo2.ui.screens.bottomnavigation.m_upcoming.Upcoming
+import com.devkproject.movieinfo2.ui.screens.bottomnavigation.tv_popular.TvPopular
 import com.devkproject.movieinfo2.ui.screens.detail.MovieDetail
 import com.devkproject.movieinfo2.ui.screens.genre.GenreScreen
 
@@ -78,8 +79,13 @@ fun Navigation(
             label = stringResource(R.string.artist_detail)
             val artistId = it.arguments?.getInt(NavigationScreen.ArtistDetail.ARTIST_ID)
             if (artistId != null) {
-                ArtistDetail(artistId)
+                ArtistDetail(navController = navController, artistId)
             }
+        }
+
+        //TV
+        composable(NavigationScreen.TV_POPULAR) {
+            TvPopular(navController = navController)
         }
     }
 }

@@ -9,17 +9,20 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavController
 import coil.compose.rememberImagePainter
 import com.devkproject.movieinfo2.R
 import com.devkproject.movieinfo2.data.model.artist.ArtistDetail
 import com.devkproject.movieinfo2.data.remote.ApiUrl
 import com.devkproject.movieinfo2.ui.component.CircularProgressBar
+import com.devkproject.movieinfo2.ui.component.appbar.AppBarOnlyArrow
 import com.devkproject.movieinfo2.ui.component.text.BioGraphyText
 import com.devkproject.movieinfo2.ui.theme.backgroundColor
 import com.devkproject.movieinfo2.ui.theme.cornerRadius10
@@ -30,7 +33,7 @@ import com.devkproject.movieinfo2.utils.network.DataState
 import com.devkproject.movieinfo2.utils.pagingLoadingState
 
 @Composable
-fun ArtistDetail(personId: Int) {
+fun ArtistDetail(navController: NavController, personId: Int) {
     val artistDetailViewModel= hiltViewModel<ArtistDetailViewModel>()
     val artistDetail = artistDetailViewModel.artistDetail
     val progressBar = remember { mutableStateOf(false) }
@@ -50,16 +53,22 @@ fun ArtistDetail(personId: Int) {
         artistDetail.value.let {
             if (it is DataState.Success<ArtistDetail>) {
                 Row {
-                    Image(
-                        painter = rememberImagePainter(ApiUrl.POSTER_URL.plus(it.data.profilePath)),
-                        contentDescription = null,
-                        contentScale = ContentScale.FillBounds,
-                        modifier = Modifier
-                            .padding(bottom = 8.dp)
-                            .height(250.dp)
-                            .width(190.dp)
-                            .cornerRadius10()
-                    )
+                    Box {
+                        Image(
+                            painter = rememberImagePainter(ApiUrl.POSTER_URL.plus(it.data.profilePath)),
+                            contentDescription = null,
+                            contentScale = ContentScale.FillBounds,
+                            modifier = Modifier
+                                .padding(bottom = 8.dp)
+                                .height(250.dp)
+                                .width(190.dp)
+                                .cornerRadius10()
+                        )
+                        AppBarOnlyArrow(color = Color.Black) {
+                            navController.popBackStack()
+                        }
+                    }
+
                     Column {
                         Text(
                             modifier = Modifier.padding(start = 8.dp),

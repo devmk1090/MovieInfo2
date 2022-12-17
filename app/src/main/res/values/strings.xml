@@ -9,12 +9,14 @@
 
     <string name="movie_detail">Movie detail</string>
     <string name="title">Title</string>
-    <string name="description">Description</string>
-    <string name="release_date">Release Date</string>
-    <string name="rating">Rating</string>
-    <string name="rating_search">Rating :</string>
+    <string name="description">줄거리</string>
+    <string name="release_date">개봉일</string>
+    <string name="rating">평점</string>
+    <string name="rating_search">평점 :</string>
     <string name="language">Language</string>
-    <string name="duration">Duration</string>
+    <string name="duration">상영시간</string>
+
+    <string name="video">동영상</string>
 
     <string name="similar">Similar</string>
     <string name="artist_detail">Artist detail</string>

@@ -20,31 +20,37 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import androidx.paging.PagingData
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
 import coil.compose.rememberImagePainter
 import com.devkproject.movieinfo2.data.model.MovieItem
+import com.devkproject.movieinfo2.data.model.TvItem
 import com.devkproject.movieinfo2.data.remote.ApiUrl
 import com.devkproject.movieinfo2.navigation.NavigationScreen
 import com.devkproject.movieinfo2.navigation.currentRoute
 import com.devkproject.movieinfo2.ui.theme.backgroundColor
 import com.devkproject.movieinfo2.ui.theme.cornerRadius10
+import com.devkproject.movieinfo2.ui.theme.textColorPrimary
 import com.devkproject.movieinfo2.utils.items
 import kotlinx.coroutines.flow.Flow
 
 @Composable
 fun HomeScreen(
     navController: NavController,
-    movies: Flow<PagingData<MovieItem>>
+    movies: Flow<PagingData<MovieItem>>? = null,
+    tvList: Flow<PagingData<TvItem>>? = null
 ) {
     val context = LocalContext.current
     val activity = (LocalContext.current as? Activity)
     val progressBar = remember { mutableStateOf(false) }
     val openDialog = remember { mutableStateOf(false) }
-    val movieItems: LazyPagingItems<MovieItem> = movies.collectAsLazyPagingItems()
+    val movieItems: LazyPagingItems<MovieItem> = movies!!.collectAsLazyPagingItems()
+    val tvItems: LazyPagingItems<TvItem> = tvList!!.collectAsLazyPagingItems()
 
     BackHandler(enabled = (currentRoute(navController) == NavigationScreen.HOME)) {
         openDialog.value = true
@@ -89,9 +95,52 @@ fun MovieItemView(context: Context, item: MovieItem, navController: NavControlle
         )
         Text(
             text = item.title,
-            color = Color.Blue,
+            color = Color.Black,
+            fontSize = 18.sp,
+            fontWeight = FontWeight.Bold
         )
-        Text(text = item.releaseDate)
-        Text(text = item.voteAverage.toString())
+        Text(
+            text = item.releaseDate,
+            color = Color.Black,
+            fontSize = 16.sp,
+        )
+        Text(
+            text = item.voteAverage.toString(),
+            color = Color.Black,
+            fontSize = 16.sp,
+        )
+    }
+}
+
+@Composable
+fun TvItemView(context: Context, item: TvItem, navController: NavController) {
+    Column(modifier = Modifier.padding(5.dp)) {
+        Image(
+            painter = rememberImagePainter(ApiUrl.POSTER_URL.plus(item.posterPath)),
+            contentDescription = null,
+            contentScale = ContentScale.FillWidth,
+            modifier = Modifier
+                .size(250.dp)
+                .cornerRadius10()
+                .clickable {
+                    //TODO
+                }
+        )
+        Text(
+            text = item.name,
+            color = Color.Black,
+            fontSize = 18.sp,
+            fontWeight = FontWeight.Bold
+        )
+        Text(
+            text = item.firstAirDate,
+            color = Color.Black,
+            fontSize = 16.sp,
+        )
+        Text(
+            text = item.voteAverage.toString(),
+            color = Color.Black,
+            fontSize = 16.sp,
+        )
     }
 }

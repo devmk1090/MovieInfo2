@@ -9,6 +9,9 @@ object NavigationScreen {
     const val NAVIGATION_DRAWER = "navigation_drawer_item"
     const val NAVIGATION_DRAWER_WITH_GENRE_ID = "navigation_drawer_item/{$GENRE_ID}"
 
+    //TV
+    const val TV_POPULAR = "tv_popular"
+
     object MovieDetail {
         const val MOVIE_DETAIL = "movieDetail"
         const val MOVIE_ITEM = "movieItem"

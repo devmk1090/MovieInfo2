@@ -16,9 +16,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.hilt.navigation.compose.hiltViewModel
 import com.devkproject.movieinfo2.ui.screens.MainViewModel
 import com.devkproject.movieinfo2.ui.theme.blue
 import com.devkproject.movieinfo2.ui.theme.searchBarColor
@@ -74,13 +72,4 @@ fun SearchBar(isAppBarVisible: MutableState<Boolean>, viewModel: MainViewModel) 
             focusRequester.requestFocus()
         }
     }
-}
-
-@Preview
-@Composable
-fun SearchBarTest() {
-    val isAppBarVisible = remember { mutableStateOf(true) }
-    val mainViewModel = hiltViewModel<MainViewModel>()
-
-    SearchBar(isAppBarVisible = isAppBarVisible, viewModel = mainViewModel)
 }

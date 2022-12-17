@@ -7,6 +7,7 @@ import androidx.lifecycle.viewModelScope
 import com.devkproject.movieinfo2.data.model.PageModel
 import com.devkproject.movieinfo2.data.model.artist.ArtistCrew
 import com.devkproject.movieinfo2.data.model.moviedetail.MovieDetail
+import com.devkproject.movieinfo2.data.model.video.Videos
 import com.devkproject.movieinfo2.data.repository.MovieRepository
 import com.devkproject.movieinfo2.utils.network.DataState
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -20,11 +21,20 @@ class MovieDetailViewModel @Inject constructor(private val movieRepository: Movi
     val movieDetail: MutableState<DataState<MovieDetail>?> = mutableStateOf(null)
     val recommendedMovie: MutableState<DataState<PageModel>?> = mutableStateOf(null)
     val artistCrew: MutableState<DataState<ArtistCrew>?> = mutableStateOf(null)
+    val videoList: MutableState<DataState<Videos>?> = mutableStateOf(null)
 
     fun movieDetail(movieId: Int) {
         viewModelScope.launch {
             movieRepository.getMovieDetail(movieId).onEach {
                 movieDetail.value = it
+            }.launchIn(viewModelScope)
+        }
+    }
+
+    fun movieVideo(movieInt: Int) {
+        viewModelScope.launch {
+            movieRepository.getMovieVideo(movieInt).onEach {
+                videoList.value = it
             }.launchIn(viewModelScope)
         }
     }

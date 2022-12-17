@@ -23,6 +23,7 @@ import com.devkproject.movieinfo2.navigation.navigationTitle
 import com.devkproject.movieinfo2.ui.component.CircularProgressBar
 import com.devkproject.movieinfo2.ui.component.NavigationItem
 import com.devkproject.movieinfo2.ui.component.SearchUI
+import com.devkproject.movieinfo2.ui.component.appbar.AppBarOnlyArrow
 import com.devkproject.movieinfo2.ui.component.appbar.AppBarWithArrow
 import com.devkproject.movieinfo2.ui.component.appbar.HomeAppBar
 import com.devkproject.movieinfo2.ui.component.appbar.SearchBar
@@ -82,11 +83,6 @@ fun MainScreen() {
                         )
                     } else {
                         SearchBar(isAppBarVisible, mainViewModel)
-                    }
-                }
-                else -> {
-                    AppBarWithArrow(navigationTitle(navController)) {
-                        navController.popBackStack()
                     }
                 }
             }

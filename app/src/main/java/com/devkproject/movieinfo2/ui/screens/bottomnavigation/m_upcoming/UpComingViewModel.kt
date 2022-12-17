@@ -1,4 +1,4 @@
-package com.devkproject.movieinfo2.ui.screens.bottomnavigation.toprated
+package com.devkproject.movieinfo2.ui.screens.bottomnavigation.m_upcoming
 
 
 import androidx.lifecycle.ViewModel
@@ -9,6 +9,6 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
 @HiltViewModel
-class TopRatedViewModel @Inject constructor(movieRepository: MovieRepository) : ViewModel() {
-    val topRatedMovies = movieRepository.topRatedPagingDataSource().cachedIn(viewModelScope)
+class UpComingViewModel @Inject constructor(movieRepository: MovieRepository) : ViewModel() {
+    val upcomingMovies = movieRepository.upcomingPagingDataSource().cachedIn(viewModelScope)
 }

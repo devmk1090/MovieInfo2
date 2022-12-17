@@ -1,5 +1,7 @@
 package com.devkproject.movieinfo2.ui.screens.detail
 
+import android.content.Intent
+import android.net.Uri
 import android.util.Log
 import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
@@ -7,19 +9,27 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.Card
+import androidx.compose.material.IconButton
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import coil.compose.rememberImagePainter
@@ -29,9 +39,12 @@ import com.devkproject.movieinfo2.data.model.PageModel
 import com.devkproject.movieinfo2.data.model.artist.ArtistCrew
 import com.devkproject.movieinfo2.data.model.artist.Cast
 import com.devkproject.movieinfo2.data.model.moviedetail.MovieDetail
+import com.devkproject.movieinfo2.data.model.video.VideoItems
+import com.devkproject.movieinfo2.data.model.video.Videos
 import com.devkproject.movieinfo2.data.remote.ApiUrl
 import com.devkproject.movieinfo2.navigation.NavigationScreen
 import com.devkproject.movieinfo2.ui.component.CircularProgressBar
+import com.devkproject.movieinfo2.ui.component.appbar.AppBarOnlyArrow
 import com.devkproject.movieinfo2.ui.component.text.SubtitlePrimary
 import com.devkproject.movieinfo2.ui.component.text.SubtitleSecondary
 import com.devkproject.movieinfo2.ui.theme.*
@@ -43,48 +56,49 @@ import com.devkproject.movieinfo2.utils.pagingLoadingState
 fun MovieDetail(navController: NavController, movieId: Int) {
 
     val lazyListState = rememberLazyListState()
-    var scrolledY = 0f
-    var previousOffset = 0
 
     val movieDetailViewModel = hiltViewModel<MovieDetailViewModel>()
     val progressBar = remember { mutableStateOf(false) }
     val movieDetail = movieDetailViewModel.movieDetail
     val recommendedMovie = movieDetailViewModel.recommendedMovie
     val artistCrew = movieDetailViewModel.artistCrew
+    val movieVideo = movieDetailViewModel.videoList
 
     LaunchedEffect(true) {
         movieDetailViewModel.movieDetail(movieId)
         movieDetailViewModel.recommendedMovie(movieId, 1)
         movieDetailViewModel.movieCredit(movieId)
+        movieDetailViewModel.movieVideo(movieId)
     }
 
     Column(
         modifier = Modifier
             .fillMaxSize()
             .background(backgroundColor)
+            .padding(start = 8.dp, end = 8.dp)
     ) {
         CircularProgressBar(isDisplayed = progressBar.value, verticalBias = 0.4f)
         movieDetail.value?.let { it ->
             if (it is DataState.Success<MovieDetail>) {
                 LazyColumn(Modifier.fillMaxSize(), lazyListState) {
                     item {
-                        Image(
-                            painter = rememberImagePainter(ApiUrl.POSTER_URL.plus(it.data.poster_path)),
-                            contentDescription = null,
-                            contentScale = ContentScale.FillWidth,
-                            modifier = Modifier
-//                                .graphicsLayer {
-//                                    scrolledY += lazyListState.firstVisibleItemScrollOffset - previousOffset
-//                                    translationY = scrolledY * 0.5f
-//                                    previousOffset = lazyListState.firstVisibleItemScrollOffset
-//                                }
-                                .fillMaxWidth()
-                                .height(600.dp)
-                        )
+                        Box {
+                            Image(
+                                painter = rememberImagePainter(ApiUrl.POSTER_URL.plus(it.data.poster_path)),
+                                contentDescription = null,
+                                contentScale = ContentScale.FillWidth,
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .height(600.dp)
+                                    .cornerRadius10()
+                            )
+                            AppBarOnlyArrow(color = Color.White) {
+                                navController.popBackStack()
+                            }
+                        }
                         Column(
                             modifier = Modifier
                                 .fillMaxSize()
-                                .padding(start = 15.dp, end = 15.dp)
                         ) {
                             Text(
                                 text = it.data.title,
@@ -129,9 +143,9 @@ fun MovieDetail(navController: NavController, movieId: Int) {
                                 fontSize = 14.sp,
                                 modifier = Modifier.padding(bottom = 10.dp)
                             )
-                            recommendedMovie.value?.let {
-                                if (it is DataState.Success<PageModel>) {
-                                    RecommendedMovie(navController, it.data.results)
+                            movieVideo.value?.let {
+                                if (it is DataState.Success<Videos>) {
+                                    AddVideo(navController, it.data.results)
                                 }
                             }
                             artistCrew.value?.let {
@@ -139,10 +153,13 @@ fun MovieDetail(navController: NavController, movieId: Int) {
                                     ArtistAndCrew(navController, it.data.cast)
                                 }
                             }
+                            recommendedMovie.value?.let {
+                                if (it is DataState.Success<PageModel>) {
+                                    RecommendedMovie(navController, it.data.results)
+                                }
+                            }
+                        }
                     }
-
-                    }
-
                 }
             }
         }
@@ -151,6 +168,56 @@ fun MovieDetail(navController: NavController, movieId: Int) {
         }
         movieDetail.pagingLoadingState {
             progressBar.value = it
+        }
+    }
+}
+
+@Composable
+fun AddVideo(navController: NavController?, videoList: List<VideoItems>) {
+    val context = LocalContext.current
+    Column(modifier = Modifier.padding(bottom = 10.dp)) {
+        Text(
+            text = stringResource(R.string.video),
+            color = textColorPrimary,
+            fontSize = 16.sp,
+            fontWeight = FontWeight.SemiBold
+        )
+        LazyRow(
+            horizontalArrangement = Arrangement.spacedBy(8.dp),
+        ) {
+            items(videoList, itemContent = { item ->
+                Column(
+                    modifier = Modifier.padding(0.dp, 5.dp)
+                ) {
+                    Box(modifier = Modifier
+                        .height(180.dp)
+                        .width(240.dp)
+                        .clickable {
+                            val playVideoIntent = Intent(
+                                Intent.ACTION_VIEW,
+                                Uri.parse(ApiUrl.getYoutubeVideoPath(item.key))
+                            )
+                            context.startActivity(playVideoIntent)
+                        }
+                    ) {
+                        Image(
+                            painter = rememberImagePainter(ApiUrl.getYoutubeVideoThumbnail(item.key)),
+                            contentDescription = null,
+                            modifier = Modifier
+                                .fillMaxSize()
+                                .align(Alignment.Center)
+                                .cornerRadius10(),
+                            contentScale = ContentScale.FillWidth
+                        )
+                        Image(
+                            painter = painterResource(id = R.drawable.ic_video_play),
+                            contentDescription = null,
+                            modifier = Modifier.align(Alignment.Center)
+                        )
+                    }
+
+                }
+            })
         }
     }
 }
@@ -222,9 +289,9 @@ fun ArtistAndCrew(navController: NavController?, cast: List<Cast>) {
                         contentScale = ContentScale.FillBounds,
                         modifier = Modifier
                             .padding(bottom = 5.dp)
-                            .height(80.dp)
+                            .height(120.dp)
                             .width(80.dp)
-                            .cornerRadius40()
+                            .cornerRadius10()
                             .clickable {
                                 navController?.navigate(
                                     NavigationScreen.ArtistDetail.ARTIST_DETAIL.plus(

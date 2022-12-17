@@ -1,17 +1,18 @@
-package com.devkproject.movieinfo2.ui.screens.bottomnavigation.nowplaying
+package com.devkproject.movieinfo2.ui.screens.bottomnavigation.m_upcoming
 
 import androidx.compose.runtime.Composable
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.devkproject.movieinfo2.ui.component.HomeScreen
 
+
 @Composable
-fun NowPlaying(
+fun Upcoming(
     navController: NavController,
 ) {
-    val nowPlayingViewModel = hiltViewModel<NowPlayingViewModel>()
+    val upComingViewModel = hiltViewModel<UpComingViewModel>()
     HomeScreen(
         navController = navController,
-        movies = nowPlayingViewModel.nowPlayingMovieList
+        movies = upComingViewModel.upcomingMovies
     )
 }

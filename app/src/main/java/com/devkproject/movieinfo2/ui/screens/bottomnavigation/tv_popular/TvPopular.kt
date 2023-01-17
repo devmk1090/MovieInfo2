@@ -8,5 +8,5 @@ import com.devkproject.movieinfo2.ui.component.HomeScreen
 @Composable
 fun TvPopular(navController: NavController) {
     val tvPopularViewModel = hiltViewModel<TvPopularViewModel>()
-    HomeScreen(navController = navController, movies = null, tvPopularViewModel.tvPopular)
+    HomeScreen(navController = navController, movies = null, tvList = tvPopularViewModel.tvPopular)
 }

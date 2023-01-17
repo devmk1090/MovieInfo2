@@ -50,7 +50,7 @@ fun HomeScreen(
     val progressBar = remember { mutableStateOf(false) }
     val openDialog = remember { mutableStateOf(false) }
     val movieItems: LazyPagingItems<MovieItem> = movies!!.collectAsLazyPagingItems()
-    val tvItems: LazyPagingItems<TvItem> = tvList!!.collectAsLazyPagingItems()
+//    val tvItems: LazyPagingItems<TvItem> = tvList!!.collectAsLazyPagingItems()
 
     BackHandler(enabled = (currentRoute(navController) == NavigationScreen.HOME)) {
         openDialog.value = true

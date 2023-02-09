@@ -167,7 +167,8 @@ fun BottomNavigationUI(navController: NavController) {
                 selectedContentColor = Color.White,
                 unselectedContentColor = Color.White.copy(0.4f),
                 onClick = {
-                    navController.navigate(item.route) {
+                    navController
+                        .navigate(item.route) {
                         navController.graph.startDestinationRoute?.let { route ->
                             popUpTo(route) {
                                 saveState = true

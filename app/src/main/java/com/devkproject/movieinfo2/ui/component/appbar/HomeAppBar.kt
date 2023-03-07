@@ -7,12 +7,12 @@ import androidx.compose.material.icons.filled.Search
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
-import com.devkproject.movieinfo2.ui.theme.Purple500
+import com.devkproject.movieinfo2.ui.theme.blue
 
 @Composable
 fun HomeAppBar(title: String, openDrawer: () -> Unit, openFilters: () -> Unit) {
     TopAppBar(
-        backgroundColor = Purple500,
+        backgroundColor = blue,
         title = {
             Text(text = title,
                 style = MaterialTheme.typography.h6

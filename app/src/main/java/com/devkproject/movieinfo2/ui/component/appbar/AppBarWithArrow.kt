@@ -16,6 +16,7 @@ import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.devkproject.movieinfo2.ui.theme.Purple500
+import com.devkproject.movieinfo2.ui.theme.blue
 
 @Composable
 fun AppBarWithArrow(
@@ -24,7 +25,7 @@ fun AppBarWithArrow(
 ) {
     TopAppBar(
         elevation = 6.dp,
-        backgroundColor = Purple500,
+        backgroundColor = blue,
         modifier = Modifier.height(48.dp)
     ) {
         Row {

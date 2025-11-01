@@ -58,6 +58,7 @@ fun MainScreen() {
 
     Scaffold(
         scaffoldState = scaffoldState,
+        modifier = Modifier.systemBarsPadding(),
         topBar = {
             when (currentRoute(navController)) {
                 NavigationScreen.HOME, NavigationScreen.POPULAR, NavigationScreen.TOP_RATED, NavigationScreen.UP_COMING, NavigationScreen.NAVIGATION_DRAWER -> {

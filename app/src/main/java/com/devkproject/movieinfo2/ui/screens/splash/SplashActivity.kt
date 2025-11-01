@@ -7,6 +7,7 @@ import androidx.activity.viewModels
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
+import androidx.core.view.WindowCompat
 import com.devkproject.movieinfo2.ui.screens.MainScreen
 import com.devkproject.movieinfo2.ui.theme.MovieInfo2Theme
 import dagger.hilt.android.AndroidEntryPoint
@@ -18,6 +19,9 @@ class SplashActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        WindowCompat.setDecorFitsSystemWindows(window, false)
+
         installSplashScreen().apply {
             setKeepOnScreenCondition { splashViewModel.isLoading.value }
         }
@@ -26,13 +30,5 @@ class SplashActivity : AppCompatActivity() {
                 MainScreen()
             }
         }
-    }
-}
-
-@Preview(showBackground = true)
-@Composable
-fun SplashPreview() {
-    MovieInfo2Theme {
-        MainScreen()
     }
 }
